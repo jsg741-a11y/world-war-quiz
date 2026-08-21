@@ -2,958 +2,1329 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;600;700;800&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
-<title>세계사퀴즈 100</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>세계대전 탐험 퀴즈</title>
 <style>
-  /* -----------------------------------------------------------
-     세계사퀴즈 100 · 세계 탐험가 여권 콘셉트 (100문항, 이어하기 지원)
-     대상: 초등학교 6학년 · 교과: 사회(세계대전과 국제 평화)
-  ------------------------------------------------------------*/
-
   :root{
-    --bg: #E4EEF0;
-    --surface: #FFFFFF;
-    --surface-2: #F3F8F7;
-    --line: #D3E1E1;
-    --line-strong: #B7CDCE;
-
-    --ink: #1C2E38;
-    --ink-soft: #4C6270;
-    --ink-faint: #8199A4;
-
-    --accent: #C68E2E;
-    --accent-strong: #A9741E;
-    --accent-soft: #F3E3BF;
-
-    --ocean: #2E7290;
-    --ocean-soft: #DCEBF0;
-
-    --good: #3F9142;
-    --good-soft: #E2F3E1;
-    --bad: #D3564A;
-    --bad-soft: #FBE4E1;
-
-    --shadow: rgba(28,46,56,0.14);
-
-    --font-display: "Jua", "Noto Sans KR", sans-serif;
-    --font-body: "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
-    --font-num: "Fredoka", "Noto Sans KR", sans-serif;
+    --navy:#2b1a10;
+    --navy-deep:#1a0f09;
+    --star:#f2c14e;
+    --comet:#7fc9a5;
+    --pink:#ff6f9c;
+    --white:#f8f2e6;
+    --panel:#3a2517;
+    --panel-line:#6b4a2e;
+    --correct:#4ade80;
+    --wrong:#ff6f6f;
   }
-
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --bg: #10202A;
-      --surface: #16293A;
-      --surface-2: #1C3040;
-      --line: #2B4453;
-      --line-strong: #3C5B6C;
-
-      --ink: #EAF2F5;
-      --ink-soft: #A9C0CA;
-      --ink-faint: #7C93A0;
-
-      --accent: #E3B75E;
-      --accent-strong: #F0CA85;
-      --accent-soft: #3A2F17;
-
-      --ocean: #6FB6D6;
-      --ocean-soft: #1B3A48;
-
-      --good: #78C97D;
-      --good-soft: #1C3324;
-      --bad: #E48479;
-      --bad-soft: #3A2220;
-
-      --shadow: rgba(0,0,0,0.4);
-    }
-  }
-  :root[data-theme="dark"]{
-    --bg: #10202A;
-    --surface: #16293A;
-    --surface-2: #1C3040;
-    --line: #2B4453;
-    --line-strong: #3C5B6C;
-
-    --ink: #EAF2F5;
-    --ink-soft: #A9C0CA;
-    --ink-faint: #7C93A0;
-
-    --accent: #E3B75E;
-    --accent-strong: #F0CA85;
-    --accent-soft: #3A2F17;
-
-    --ocean: #6FB6D6;
-    --ocean-soft: #1B3A48;
-
-    --good: #78C97D;
-    --good-soft: #1C3324;
-    --bad: #E48479;
-    --bad-soft: #3A2220;
-
-    --shadow: rgba(0,0,0,0.4);
-  }
-
-  *{ box-sizing: border-box; }
-
-  body{
-    margin: 0;
-    min-height: 100vh;
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;
+    padding:0;
+    min-height:100vh;
+    font-family:'Trebuchet MS','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
     background:
-      radial-gradient(ellipse 900px 500px at 15% -8%, var(--ocean-soft), transparent 55%),
-      radial-gradient(ellipse 800px 500px at 100% 10%, var(--accent-soft), transparent 55%),
-      var(--bg);
-    color: var(--ink);
-    font-family: var(--font-body);
-    line-height: 1.6;
-    padding: clamp(18px, 4vw, 44px) clamp(14px, 4vw, 22px) 56px;
-    display: flex;
-    justify-content: center;
+      radial-gradient(circle at 15% 20%, rgba(242,193,78,0.08) 0, transparent 30%),
+      radial-gradient(circle at 85% 15%, rgba(242,193,78,0.06) 0, transparent 30%),
+      radial-gradient(circle at 50% 90%, rgba(127,201,165,0.06) 0, transparent 35%),
+      linear-gradient(180deg, var(--navy-deep), var(--navy));
+    color:var(--white);
+    -webkit-tap-highlight-color: transparent;
   }
-
-  h1, h2{ font-family: var(--font-display); font-weight: 400; text-wrap: balance; }
-  button{ font-family: inherit; }
-  :focus-visible{ outline: 3px solid var(--ocean); outline-offset: 2px; border-radius: 6px; }
-
-  .app{ width: 100%; max-width: 620px; display: flex; flex-direction: column; gap: 18px; }
-
-  .masthead{
-    text-align: center;
-    padding: 26px 18px 20px;
-    background: linear-gradient(180deg, var(--surface), var(--surface-2));
-    border: 1px solid var(--line);
-    border-radius: 20px;
-    box-shadow: 0 10px 26px var(--shadow);
+  .stage{
+    max-width:720px;
+    margin:0 auto;
+    padding:24px 16px 60px;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
   }
-  .globe-badge{ font-size: 40px; line-height: 1; display: inline-block; margin-bottom: 6px; }
-  .masthead h1{ margin: 0 0 4px; font-size: clamp(28px, 6.6vw, 38px); color: var(--accent-strong); }
-  .masthead .byline{ margin: 0; font-size: 13.5px; color: var(--ink-faint); letter-spacing: 0.02em; }
-
-  .panel{
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    padding: 24px 22px;
-    box-shadow: 0 6px 18px var(--shadow);
+  .topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:var(--panel);
+    border:2px solid var(--panel-line);
+    border-radius:20px;
+    padding:14px 22px;
+    margin-bottom:22px;
+    font-size:20px;
+    font-weight:700;
   }
-
-  /* ---------- start screen ---------- */
-  .start-panel{ text-align: center; display: flex; flex-direction: column; gap: 14px; align-items: center; }
-  .start-panel p{ margin: 0; color: var(--ink-soft); font-size: 15px; max-width: 46ch; }
-  .start-facts{ display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 4px 0 6px; }
-  .fact-chip{ font-size: 12.5px; font-weight: 600; color: var(--ocean); background: var(--ocean-soft); border-radius: 999px; padding: 6px 12px; }
-
-  .resume-card{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
-    padding: 16px 16px 18px;
-    border: 1.5px dashed var(--accent);
-    background: var(--accent-soft);
-    border-radius: 14px;
+  .topbar .score{
+    color:var(--star);
+    font-size:24px;
   }
-  .resume-card p{ margin: 0; font-size: 14px; color: var(--ink); font-weight: 600; }
-  .resume-card .resume-sub{ font-weight: 400; color: var(--ink-soft); font-size: 13px; }
-  .resume-actions{ display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
-
-  .btn{
-    padding: 11px 22px;
-    border-radius: 999px;
-    border: none;
-    font-size: 14.5px;
-    font-weight: 700;
-    cursor: pointer;
-    font-family: var(--font-body);
+  .topbar .progress{
+    color:var(--comet);
   }
-  .btn-primary{ color: #fff; background: var(--ocean); }
-  .btn-primary:hover{ filter: brightness(1.08); }
-  .btn-ghost{ color: var(--ink-soft); background: var(--surface); border: 1.5px solid var(--line-strong); }
-  .btn-ghost:hover{ border-color: var(--ink-faint); color: var(--ink); }
-
-  .start-btn{
-    margin-top: 6px;
-    padding: 14px 34px;
-    font-family: var(--font-display);
-    font-size: 19px;
-    color: #fff;
-    background: linear-gradient(180deg, var(--accent-strong), var(--accent));
-    border: none;
-    border-radius: 999px;
-    cursor: pointer;
-    box-shadow: 0 8px 20px rgba(198,142,46,0.32);
-    transition: transform 0.12s ease;
+  h1{
+    text-align:center;
+    font-size:clamp(28px,7vw,42px);
+    margin:6px 0 4px;
+    letter-spacing:1px;
+    text-shadow:0 0 18px rgba(255,226,122,0.5);
   }
-  .start-btn:hover{ transform: translateY(-2px); }
-  .start-btn:active{ transform: translateY(0); }
-
-  /* ---------- quiz screen ---------- */
-  .quiz-wrap{ display: flex; flex-direction: column; gap: 14px; }
-
-  .progress-row{
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  .subtitle{
+    text-align:center;
+    color:#c7cdf0;
+    font-size:18px;
+    margin-bottom:30px;
   }
-  .progress-top{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    flex-wrap: wrap;
+  .planet{
+    width:120px;
+    height:120px;
+    margin:10px auto 26px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #f7dfa0, #d9a441 55%, #8a5a1e 100%);
+    box-shadow:0 0 40px rgba(217,164,65,0.5), inset -14px -14px 30px rgba(0,0,0,0.35);
+    animation:float 4s ease-in-out infinite;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:56px;
   }
-  .q-counter{ font-size: 13px; color: var(--ink-faint); font-weight: 600; }
-  .score-mini{ font-size: 12.5px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
-  .score-mini b.g{ color: var(--good); }
-  .score-mini b.b{ color: var(--bad); }
-
-  .progress-controls{ display: flex; align-items: center; gap: 8px; }
-  .timer{
-    font-family: var(--font-num);
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--ocean);
-    background: var(--ocean-soft);
-    padding: 5px 12px;
-    border-radius: 999px;
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
+  @keyframes float{
+    0%,100%{transform:translateY(0px);}
+    50%{transform:translateY(-14px);}
   }
-  .timer.low{ color: var(--bad); background: var(--bad-soft); }
-  .save-exit{
-    font-size: 12.5px;
-    font-weight: 700;
-    color: var(--ink-soft);
-    background: var(--surface-2);
-    border: 1.5px solid var(--line-strong);
-    border-radius: 999px;
-    padding: 5px 12px;
-    cursor: pointer;
+  .card{
+    background:var(--panel);
+    border:2px solid var(--panel-line);
+    border-radius:24px;
+    padding:28px 22px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.35);
   }
-  .save-exit:hover{ border-color: var(--ocean); color: var(--ocean); }
-
-  .progress-bar-track{
-    height: 10px;
-    border-radius: 999px;
-    background: var(--surface-2);
-    border: 1px solid var(--line);
-    overflow: hidden;
+  .btn-primary{
+    display:block;
+    width:100%;
+    max-width:320px;
+    margin:0 auto;
+    padding:20px;
+    font-size:24px;
+    font-weight:800;
+    color:var(--navy-deep);
+    background:linear-gradient(135deg, var(--star), #ffc266);
+    border:none;
+    border-radius:18px;
+    cursor:pointer;
+    box-shadow:0 8px 0 #c99a2e, 0 14px 24px rgba(0,0,0,0.35);
+    transition:transform 0.08s ease;
   }
-  .progress-bar-fill{
-    height: 100%;
-    background: linear-gradient(90deg, var(--ocean), var(--accent));
-    border-radius: 999px;
-    transition: width 0.25s ease;
-    width: 0%;
+  .btn-primary:active{
+    transform:translateY(6px);
+    box-shadow:0 2px 0 #c99a2e, 0 6px 14px rgba(0,0,0,0.35);
   }
-
-  .question-card{ display: flex; flex-direction: column; gap: 16px; }
-  .question-text{
-    margin: 0;
-    font-size: clamp(18px, 4.4vw, 21px);
-    font-weight: 700;
-    color: var(--ink);
-    text-wrap: balance;
+  .btn-secondary{
+    display:block;
+    width:100%;
+    max-width:320px;
+    margin:14px auto 0;
+    padding:16px;
+    font-size:19px;
+    font-weight:700;
+    color:var(--comet);
+    background:transparent;
+    border:2px solid var(--comet);
+    border-radius:16px;
+    cursor:pointer;
+    transition:transform 0.08s ease, background 0.15s ease;
   }
-
-  .choices{ display: flex; flex-direction: column; gap: 10px; }
-  .choice-btn{
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-align: left;
-    padding: 13px 16px;
-    border: 1.5px solid var(--line);
-    background: var(--surface-2);
-    border-radius: 12px;
-    font-size: 15.5px;
-    color: var(--ink);
-    cursor: pointer;
-    transition: border-color 0.12s ease, background 0.12s ease, transform 0.08s ease;
+  .btn-secondary:active{
+    transform:translateY(3px);
   }
-  .choice-btn:hover:not(:disabled){ border-color: var(--ocean); transform: translateX(2px); }
-  .choice-btn:disabled{ cursor: default; }
-  .choice-letter{
-    flex-shrink: 0;
-    width: 26px; height: 26px;
-    border-radius: 50%;
-    background: var(--surface);
-    border: 1.5px solid var(--line-strong);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--ink-soft);
+  .resume-banner{
+    background:rgba(127,201,165,0.12);
+    border:2px solid var(--comet);
+    border-radius:16px;
+    padding:14px 18px;
+    font-size:17px;
+    line-height:1.5;
+    margin-bottom:18px;
+    max-width:420px;
   }
-  .choice-btn.correct{ border-color: var(--good); background: var(--good-soft); }
-  .choice-btn.correct .choice-letter{ background: var(--good); border-color: var(--good); color: #fff; }
-  .choice-btn.wrong{ border-color: var(--bad); background: var(--bad-soft); }
-  .choice-btn.wrong .choice-letter{ background: var(--bad); border-color: var(--bad); color: #fff; }
-
-  .feedback{
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding: 14px 16px;
-    border-radius: 12px;
-    font-size: 14.5px;
-    animation: slide-in 0.18s ease-out;
+  .reset-link{
+    background:none;
+    border:none;
+    color:#c7cdf0;
+    font-size:15px;
+    text-decoration:underline;
+    cursor:pointer;
+    padding:4px;
   }
-  @keyframes slide-in{ from{ opacity: 0; transform: translateY(-4px); } to{ opacity: 1; transform: translateY(0); } }
-  .feedback.good{ background: var(--good-soft); color: var(--ink); border: 1px solid var(--good); }
-  .feedback.bad{ background: var(--bad-soft); color: var(--ink); border: 1px solid var(--bad); }
-  .feedback .fb-title{ font-weight: 800; }
-  .feedback.good .fb-title{ color: var(--good); }
-  .feedback.bad .fb-title{ color: var(--bad); }
-
-  .next-btn{
-    align-self: flex-end;
-    padding: 11px 24px;
-    border: none;
-    border-radius: 999px;
-    background: var(--ocean);
-    color: #fff;
-    font-weight: 700;
-    font-size: 14.5px;
-    cursor: pointer;
+  .save-indicator{
+    text-align:center;
+    font-size:14px;
+    color:#8f98c2;
+    margin-top:14px;
+    min-height:18px;
   }
-  .next-btn:hover{ filter: brightness(1.08); }
-
-  /* ---------- result screen ---------- */
-  .result-panel{ text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
-  .medal{ font-size: 56px; line-height: 1; }
-  .result-title{ margin: 0; font-family: var(--font-display); font-size: 26px; color: var(--accent-strong); }
-  .score-line{ font-family: var(--font-num); font-size: 40px; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
-  .score-line span{ color: var(--ink-faint); font-size: 22px; }
-  .result-msg{ margin: 0; color: var(--ink-soft); font-size: 14.5px; max-width: 42ch; }
-  .retry-btn{
-    margin-top: 6px;
-    padding: 13px 30px;
-    font-family: var(--font-display);
-    font-size: 17px;
-    color: #fff;
-    background: var(--ocean);
-    border: none;
-    border-radius: 999px;
-    cursor: pointer;
+  .nickname-input{
+    display:block;
+    width:100%;
+    max-width:320px;
+    margin:14px auto 0;
+    padding:14px 16px;
+    font-size:18px;
+    font-family:inherit;
+    color:var(--white);
+    background:#1c264d;
+    border:2px solid var(--panel-line);
+    border-radius:14px;
+    text-align:center;
   }
-  .retry-btn:hover{ filter: brightness(1.08); }
-
-  .result-rank{
-    margin: -4px 0 4px;
-    font-size: 13.5px;
-    font-weight: 700;
-    color: var(--ocean);
-    background: var(--ocean-soft);
-    padding: 6px 14px;
-    border-radius: 999px;
+  .nickname-input:focus{
+    outline:none;
+    border-color:var(--comet);
   }
-
-  /* ---------- leaderboard ---------- */
-  .leaderboard-panel{ display: flex; flex-direction: column; gap: 12px; }
-  .leaderboard-head{ display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-  .leaderboard-title{ margin: 0; font-family: var(--font-display); font-size: 18px; color: var(--accent-strong); }
-  .lb-clear{
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--ink-faint);
-    background: none;
-    border: 1px solid var(--line-strong);
-    border-radius: 999px;
-    padding: 5px 11px;
-    cursor: pointer;
+  .privacy-note{
+    max-width:340px;
+    margin:12px auto 0;
+    font-size:14px;
+    line-height:1.5;
+    color:#9aa2c9;
   }
-  .lb-clear:hover{ color: var(--bad); border-color: var(--bad); }
-
-  .leaderboard-list{ list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .register-status{
+    min-height:20px;
+    font-size:15px;
+    color:var(--comet);
+    margin-top:10px;
+  }
+  .leaderboard-list{
+    width:100%;
+    max-width:420px;
+    margin:8px auto 0;
+    text-align:left;
+  }
   .lb-row{
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 9px 12px;
-    background: var(--surface-2);
-    border: 1px solid var(--line);
-    border-radius: 10px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background:var(--panel);
+    border:2px solid var(--panel-line);
+    border-radius:14px;
+    padding:12px 16px;
+    margin-bottom:10px;
+    font-size:18px;
   }
-  .lb-row.mine{ border-color: var(--accent); background: var(--accent-soft); }
   .lb-rank{
-    flex-shrink: 0;
-    width: 30px;
-    text-align: center;
-    font-family: var(--font-num);
-    font-size: 17px;
-    color: var(--ink-soft);
+    font-weight:800;
+    color:var(--star);
+    width:34px;
+    flex-shrink:0;
+    text-align:center;
+    font-size:20px;
   }
-  .lb-body{ flex: 1; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
-  .lb-score{ font-weight: 700; color: var(--ink); font-size: 14.5px; }
-  .lb-meta{ font-size: 12px; color: var(--ink-faint); }
-  .lb-tag{
-    flex-shrink: 0;
-    font-size: 11px;
-    font-weight: 700;
-    color: #fff;
-    background: var(--accent-strong);
-    padding: 3px 8px;
-    border-radius: 999px;
+  .lb-name{
+    flex:1;
+    font-weight:700;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
   }
-  .lb-empty{ margin: 0; font-size: 13.5px; color: var(--ink-faint); text-align: center; padding: 8px 0; }
-
-  [hidden]{ display: none !important; }
-
-  @media (prefers-reduced-motion: reduce){
-    .feedback, .start-btn, .choice-btn, .progress-bar-fill{ animation: none !important; transition: none !important; }
+  .lb-score{
+    font-weight:800;
+    color:var(--comet);
+  }
+  .lb-empty{
+    color:#9aa2c9;
+    font-size:16px;
+    text-align:center;
+    margin-top:10px;
+  }
+  .question-text{
+    font-size:clamp(22px,5.5vw,28px);
+    font-weight:700;
+    line-height:1.4;
+    margin-bottom:26px;
+    text-align:center;
+  }
+  .options{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  .option-btn{
+    font-size:20px;
+    font-weight:700;
+    padding:20px 18px;
+    border-radius:18px;
+    border:3px solid var(--panel-line);
+    background:#1c264d;
+    color:var(--white);
+    cursor:pointer;
+    text-align:left;
+    transition:transform 0.08s ease, border-color 0.15s ease, background 0.15s ease;
+  }
+  .option-btn:hover:not(:disabled){
+    border-color:var(--comet);
+    transform:translateY(-2px);
+  }
+  .option-btn:active:not(:disabled){
+    transform:translateY(1px);
+  }
+  .option-btn:disabled{
+    cursor:default;
+  }
+  .option-btn.correct{
+    background:rgba(74,222,128,0.18);
+    border-color:var(--correct);
+    color:var(--correct);
+  }
+  .option-btn.wrong{
+    background:rgba(255,111,111,0.18);
+    border-color:var(--wrong);
+    color:var(--wrong);
+  }
+  .feedback{
+    margin-top:22px;
+    padding:18px;
+    border-radius:16px;
+    font-size:18px;
+    line-height:1.6;
+    display:none;
+  }
+  .feedback.show{
+    display:block;
+    animation:pop 0.25s ease;
+  }
+  @keyframes pop{
+    from{opacity:0; transform:scale(0.96);}
+    to{opacity:1; transform:scale(1);}
+  }
+  .feedback.correct-fb{
+    background:rgba(74,222,128,0.12);
+    border:2px solid var(--correct);
+  }
+  .feedback.wrong-fb{
+    background:rgba(255,111,111,0.12);
+    border:2px solid var(--wrong);
+  }
+  .feedback .fb-title{
+    font-weight:800;
+    font-size:20px;
+    margin-bottom:8px;
+  }
+  .next-btn{
+    margin-top:20px;
+    width:100%;
+    padding:18px;
+    font-size:20px;
+    font-weight:800;
+    color:var(--navy-deep);
+    background:var(--comet);
+    border:none;
+    border-radius:16px;
+    cursor:pointer;
+    box-shadow:0 6px 0 #4ba69c;
+  }
+  .next-btn:active{
+    transform:translateY(4px);
+    box-shadow:0 2px 0 #4ba69c;
+  }
+  .center-screen{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    flex:1;
+    text-align:center;
+  }
+  .result-score{
+    font-size:clamp(48px,14vw,72px);
+    font-weight:900;
+    color:var(--star);
+    margin:10px 0 6px;
+    text-shadow:0 0 24px rgba(255,226,122,0.6);
+  }
+  .result-msg{
+    font-size:20px;
+    color:#c7cdf0;
+    margin-bottom:30px;
+  }
+  .medal{
+    font-size:64px;
+    margin-bottom:6px;
+  }
+  .hidden{display:none;}
+  footer-note{display:none;}
+  @media (min-width:600px){
+    .options{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+    }
   }
 </style>
 </head>
 <body>
-<div class="app">
+<div class="stage">
 
-  <header class="masthead">
-    <span class="globe-badge" aria-hidden="true">🌍</span>
-    <h1>세계사퀴즈 100</h1>
-    <p class="byline">초등 6학년 사회 · 세계대전과 국제 평화 탐험 (100문항 완전판)</p>
-  </header>
+  <!-- 시작 화면 -->
+  <div id="screen-start" class="center-screen">
+    <div class="planet">🌍</div>
+    <h1>🏛️ 세계대전 탐험 퀴즈</h1>
+    <p class="subtitle">세계를 뒤흔든 두 번의 큰 전쟁, 얼마나 알고 있을까요?<br>100개의 문제를 풀고 세계대전 박사에 도전해보세요!</p>
+    <div id="resume-banner" class="resume-banner hidden"></div>
+    <button class="btn-primary hidden" id="btn-resume">이어서 풀기</button>
+    <button class="btn-primary" id="btn-start">게임 시작하기</button>
+    <button class="btn-secondary" id="btn-view-leaderboard-start">🏆 랭킹 보기</button>
+  </div>
 
-  <section class="panel start-panel" id="startPanel">
-
-    <div class="resume-card" id="resumeCard" hidden>
-      <p>이어할 수 있는 탐험 기록이 있어요</p>
-      <p class="resume-sub" id="resumeInfo"></p>
-      <div class="resume-actions">
-        <button type="button" class="btn btn-primary" id="resumeBtn">이어하기</button>
-        <button type="button" class="btn btn-ghost" id="freshBtn">새로 시작하기</button>
+  <!-- 게임 화면 -->
+  <div id="screen-game" class="hidden">
+    <div class="topbar">
+      <div class="progress" id="progress-label">문제 1 / 5</div>
+      <div class="score" id="score-label">점수: 0점</div>
+    </div>
+    <div class="card">
+      <div class="question-text" id="question-text"></div>
+      <div class="options" id="options-container"></div>
+      <div class="feedback" id="feedback-box">
+        <div class="fb-title" id="feedback-title"></div>
+        <div id="feedback-explain"></div>
       </div>
+      <button class="next-btn hidden" id="btn-next">다음 문제로 →</button>
     </div>
+    <div class="save-indicator" id="save-indicator"></div>
+    <button class="reset-link" id="btn-reset" style="display:block; margin:10px auto 0;">처음부터 다시 시작</button>
+  </div>
 
-    <p>제1·2차 세계대전과 우리나라의 광복 이야기를 따라가며 100개의 질문에 도전해보세요. 중간에 멈춰도 언제든 이어서 풀 수 있어요.</p>
-    <div class="start-facts">
-      <span class="fact-chip">문제 100개</span>
-      <span class="fact-chip">5지선다</span>
-      <span class="fact-chip">제한시간 60분</span>
-      <span class="fact-chip">정답 풀이 제공</span>
-      <span class="fact-chip">중간저장 · 이어하기</span>
-    </div>
-    <button type="button" class="start-btn" id="startBtn">탐험 시작하기 🧭</button>
-  </section>
+  <!-- 결과 화면 -->
+  <div id="screen-result" class="center-screen hidden">
+    <div class="medal" id="result-medal">🏆</div>
+    <div class="subtitle" style="margin-bottom:0;">최종 점수</div>
+    <div class="result-score" id="final-score">0점</div>
+    <div class="result-msg" id="result-msg"></div>
 
-  <section class="panel leaderboard-panel" id="leaderboardPanel">
-    <div class="leaderboard-head">
-      <h2 class="leaderboard-title">🏆 명예의 전당 (내 최고 기록)</h2>
-      <button type="button" class="lb-clear" id="lbClearBtn">기록 초기화</button>
-    </div>
-    <ol class="leaderboard-list" id="leaderboardList"></ol>
-  </section>
+    <input type="text" id="nickname-input" class="nickname-input" maxlength="12" placeholder="별명을 입력하세요 (예: 우주여행자)">
+    <p class="privacy-note">실명 대신 재미있는 별명을 사용해주세요. 등록하면 이 별명과 점수가 이 퀴즈를 하는 다른 모든 학생에게 공개돼요.</p>
+    <button class="btn-secondary" id="btn-register-score">랭킹에 등록하기</button>
+    <div class="register-status" id="register-status"></div>
 
-  <section class="quiz-wrap" id="quizPanel" hidden>
-    <div class="progress-row">
-      <div class="progress-top">
-        <span class="q-counter" id="qCounter">질문 1 / 100</span>
-        <span class="score-mini" id="scoreMini">정답 <b class="g">0</b> · 오답 <b class="b">0</b></span>
-        <div class="progress-controls">
-          <span class="timer" id="timer">60:00</span>
-          <button type="button" class="save-exit" id="saveExitBtn">저장하고 나가기</button>
-        </div>
-      </div>
-      <div class="progress-bar-track">
-        <div class="progress-bar-fill" id="progressFill"></div>
-      </div>
-    </div>
+    <button class="btn-primary" id="btn-restart">다시 시작하기</button>
+    <button class="btn-secondary" id="btn-view-leaderboard-result">🏆 랭킹 보기</button>
+  </div>
 
-    <div class="panel question-card">
-      <p class="question-text" id="questionText"></p>
-      <div class="choices" id="choices"></div>
-      <div class="feedback" id="feedback" hidden></div>
-    </div>
-  </section>
-
-  <section class="panel result-panel" id="resultPanel" hidden>
-    <span class="medal" id="medal"></span>
-    <h2 class="result-title" id="resultTitle"></h2>
-    <p class="score-line" id="scoreLine"></p>
-    <p class="result-msg" id="resultMsg"></p>
-    <p class="result-rank" id="resultRank" hidden></p>
-    <button type="button" class="retry-btn" id="retryBtn">처음부터 다시 도전하기</button>
-  </section>
+  <!-- 랭킹 화면 -->
+  <div id="screen-leaderboard" class="center-screen hidden">
+    <div class="medal">🏆</div>
+    <h1 style="font-size:clamp(24px,6vw,32px);">랭킹 TOP 10</h1>
+    <div class="leaderboard-list" id="leaderboard-list"></div>
+    <button class="btn-primary" id="btn-leaderboard-back">처음 화면으로</button>
+  </div>
 
 </div>
 
 <script>
 (function(){
-  "use strict";
-
-  var QUESTIONS = [
-    { q:"제1차 세계대전은 몇 년에 시작되었나요?", choices:["1904년","1910년","1914년","1920년","1930년"], correct:2, explain:"제1차 세계대전은 1914년부터 1918년까지 있었던 전쟁이에요." },
-    { q:"제1차 세계대전이 시작되는 계기가 된 사건은?", choices:["사라예보에서 오스트리아 황태자 부부가 암살된 사건","일본의 진주만 공습","노르망디 상륙작전","베를린 장벽 붕괴","무적함대의 침몰"], correct:0, explain:"1914년 사라예보에서 오스트리아·헝가리 황태자 부부가 암살되며 전쟁이 시작됐어요." },
-    { q:"제1차 세계대전은 주로 어느 대륙에서 벌어졌나요?", choices:["아프리카","아시아","유럽","오세아니아","남아메리카"], correct:2, explain:"제1차 세계대전은 유럽 여러 나라가 두 편으로 나뉘어 싸운 전쟁이었어요." },
-    { q:"제1차 세계대전에서 독일, 오스트리아·헝가리 등이 속한 진영을 무엇이라 부르나요?", choices:["연합국","동맹국","추축국","국제연맹","국제연합"], correct:1, explain:"독일과 오스트리아·헝가리 등은 '동맹국' 진영이었어요." },
-    { q:"제1차 세계대전에서 영국, 프랑스, 러시아 등이 속한 진영을 무엇이라 부르나요?", choices:["동맹국","추축국","연합국","국제연맹","코민테른"], correct:2, explain:"영국, 프랑스, 러시아 등은 '연합국' 진영이었어요." },
-    { q:"제1차 세계대전은 몇 년에 끝났나요?", choices:["1915년","1916년","1918년","1922년","1925년"], correct:2, explain:"제1차 세계대전은 1918년에 끝났어요." },
-    { q:"제1차 세계대전을 공식적으로 끝낸 조약은?", choices:["베르사유 조약","카이로 선언","포츠담 선언","얄타 협정","대서양 헌장"], correct:0, explain:"1919년 베르사유 조약으로 제1차 세계대전이 공식적으로 마무리됐어요." },
-    { q:"제1차 세계대전 후 평화를 지키기 위해 만들어진 국제기구는?", choices:["국제연합(UN)","국제연맹","유럽연합(EU)","세계보건기구(WHO)","국제올림픽위원회"], correct:1, explain:"제1차 세계대전 뒤에는 '국제연맹'이 만들어졌지만, 힘이 약해 전쟁을 막지 못했어요." },
-    { q:"미국이 제1차 세계대전에 참전하게 된 주요 계기는?", choices:["독일 잠수함의 공격","일본의 공습","이탈리아의 침공","러시아의 요청","영국의 식민지 문제"], correct:0, explain:"독일 잠수함이 미국 배를 공격하면서 미국도 전쟁에 참여하게 됐어요." },
-    { q:"제1차 세계대전에서 새롭게 등장해 큰 피해를 만든 무기가 아닌 것은?", choices:["탱크","기관총","독가스","인공위성","전투기"], correct:3, explain:"인공위성은 훨씬 뒤인 1950년대 이후에 등장한 발명품이에요." },
-    { q:"제2차 세계대전은 몇 년에 시작되었나요?", choices:["1929년","1935년","1939년","1945년","1950년"], correct:2, explain:"1939년 독일이 폴란드를 침공하며 제2차 세계대전이 시작됐어요." },
-    { q:"제2차 세계대전의 계기가 된 사건은?", choices:["독일의 폴란드 침공","일본의 진주만 공습","사라예보 사건","베를린 봉쇄","6·25 전쟁"], correct:0, explain:"독일이 폴란드를 침공하자 영국과 프랑스가 독일에 선전포고하며 전쟁이 시작됐어요." },
-    { q:"제2차 세계대전이 일어나기 전, 세계 경제를 크게 어렵게 만든 사건은?", choices:["세계 대공황","산업혁명","프랑스 혁명","냉전","골드러시"], correct:0, explain:"1929년 시작된 세계 대공황으로 여러 나라가 경제적 어려움을 겪었고, 이는 전쟁의 배경이 됐어요." },
-    { q:"제2차 세계대전 당시 독일을 이끌었던 지도자는?", choices:["처칠","루스벨트","스탈린","히틀러","나폴레옹"], correct:3, explain:"히틀러가 이끄는 독일이 여러 나라를 침공하며 전쟁을 확대시켰어요." },
-    { q:"제2차 세계대전 당시 이탈리아를 이끌었던 지도자는?", choices:["무솔리니","히틀러","처칠","스탈린","루스벨트"], correct:0, explain:"무솔리니는 이탈리아의 독재자로, 독일과 함께 전쟁을 일으켰어요." },
-    { q:"독일, 이탈리아, 일본이 함께 이룬 전쟁 진영을 무엇이라 부르나요?", choices:["연합국","동맹국","추축국","국제연맹","삼국동맹"], correct:2, explain:"독일·이탈리아·일본을 '추축국'이라고 불러요." },
-    { q:"제2차 세계대전에서 영국, 미국, 소련 등이 속한 진영을 무엇이라 부르나요?", choices:["추축국","연합국","동맹국","코민테른","삼국협상"], correct:1, explain:"영국·미국·소련 등은 '연합국' 진영으로 함께 싸웠어요." },
-    { q:"제2차 세계대전 당시 영국을 이끌었던 지도자는?", choices:["처칠","히틀러","무솔리니","스탈린","드골"], correct:0, explain:"처칠 총리는 강한 의지로 영국을 이끌며 독일에 맞섰어요." },
-    { q:"제2차 세계대전 당시 미국을 이끌었던 대통령은?", choices:["링컨","루스벨트","워싱턴","케네디","트루먼"], correct:1, explain:"루스벨트 대통령이 전쟁 대부분의 기간 동안 미국을 이끌었어요." },
-    { q:"베르사유 조약에 대한 독일 국민들의 불만은 어떤 지도자가 등장하는 배경이 되었나요?", choices:["처칠","루스벨트","히틀러","스탈린","무솔리니"], correct:2, explain:"가혹한 조약 내용에 대한 불만은 히틀러가 힘을 얻는 배경이 되었어요." },
-    { q:"1940년, 독일에 점령당한 유럽의 나라는?", choices:["프랑스","미국","소련","일본","스페인"], correct:0, explain:"1940년 독일군은 프랑스를 점령했어요." },
-    { q:"독일이 영국을 굴복시키기 위해 벌인 대규모 공습을 무엇이라 부르나요?", choices:["영국 본토 항공전","노르망디 상륙작전","진주만 공습","미드웨이 해전","스탈린그라드 전투"], correct:0, explain:"독일은 영국 본토를 폭격했지만 결국 영국을 굴복시키지 못했어요." },
-    { q:"1941년, 독일이 침공한 큰 나라는?", choices:["소련","미국","스페인","스위스","포르투갈"], correct:0, explain:"1941년 독일은 소련을 침공했지만 결국 큰 피해를 입고 물러났어요." },
-    { q:"1941년 12월, 일본이 미국을 기습 공격한 사건은?", choices:["노르망디 상륙작전","진주만 공습","미드웨이 해전","스탈린그라드 전투","됭케르크 철수"], correct:1, explain:"일본의 진주만 공습으로 미국이 제2차 세계대전에 본격적으로 참전하게 됐어요." },
-    { q:"일본이 진주만을 공격한 이후 새롭게 시작된 전쟁은?", choices:["태평양 전쟁","냉전","6·25 전쟁","걸프 전쟁","남북전쟁"], correct:0, explain:"일본과 미국을 중심으로 태평양 지역에서 벌어진 전쟁을 '태평양 전쟁'이라고 해요." },
-    { q:"1944년, 연합군이 프랑스 해안에 상륙해 유럽 해방을 시작한 작전은?", choices:["노르망디 상륙작전","미드웨이 해전","진주만 공습","됭케르크 철수","스탈린그라드 전투"], correct:0, explain:"노르망디 상륙작전으로 연합군은 독일 점령지였던 프랑스를 되찾기 시작했어요." },
-    { q:"소련군이 독일군의 진격을 크게 저지한 전투는?", choices:["스탈린그라드 전투","미드웨이 해전","진주만 공습","노르망디 상륙작전","트라팔가 해전"], correct:0, explain:"스탈린그라드 전투에서 소련군이 승리하며 독일군의 기세가 크게 꺾였어요." },
-    { q:"태평양에서 미국이 일본에 승리하며 전세를 뒤집은 해전은?", choices:["미드웨이 해전","노르망디 상륙작전","스탈린그라드 전투","트라팔가 해전","됭케르크 철수"], correct:0, explain:"미드웨이 해전에서 미국이 크게 승리하며 태평양 전쟁의 흐름이 바뀌었어요." },
-    { q:"1943년, 연합국에 항복한 추축국 나라는?", choices:["이탈리아","독일","일본","헝가리","핀란드"], correct:0, explain:"1943년 이탈리아가 먼저 항복했어요." },
-    { q:"독일이 연합국에 항복한 때는 언제인가요?", choices:["1943년","1944년","1945년 5월","1945년 8월","1946년"], correct:2, explain:"독일은 1945년 5월에 항복하며 유럽에서의 전쟁이 끝났어요." },
-    { q:"일본이 연합국에 항복한 날은 언제인가요?", choices:["1945년 5월","1945년 8월 15일","1945년 12월","1946년 1월","1944년 6월"], correct:1, explain:"일본은 1945년 8월 15일에 항복을 선언했어요." },
-    { q:"일본에 원자폭탄이 투하된 두 도시는?", choices:["도쿄와 오사카","히로시마와 나가사키","교토와 고베","삿포로와 후쿠오카","나고야와 요코하마"], correct:1, explain:"1945년 8월, 히로시마와 나가사키에 원자폭탄이 떨어졌어요." },
-    { q:"원자폭탄 투하가 전쟁에 미친 영향으로 가장 알맞은 것은?", choices:["전쟁이 오히려 길어졌다","일본의 조기 항복을 이끌었다","아무 영향이 없었다","독일이 항복했다","소련이 참전을 그만두었다"], correct:1, explain:"원자폭탄의 큰 피해는 일본이 항복을 서두르게 만든 계기가 되었어요." },
-    { q:"1945년 8월 15일, 우리나라에 일어난 뜻깊은 일은?", choices:["6·25 전쟁 발발","8·15 광복","정부 수립","한일 국교 정상화","남북 분단 완료"], correct:1, explain:"일본이 항복하며 우리나라는 일제의 지배에서 벗어나 광복을 맞이했어요." },
-    { q:"우리나라가 일본의 식민 지배를 받았던 기간은 대략 몇 년인가요?", choices:["약 10년","약 20년","약 35년","약 50년","약 70년"], correct:2, explain:"1910년부터 1945년까지, 약 35년간 일제강점기를 겪었어요." },
-    { q:"1919년, 전국적으로 일어난 독립 만세 운동은?", choices:["3·1운동","4·19혁명","5·18민주화운동","6월 민주항쟁","갑오개혁"], correct:0, explain:"1919년 3월 1일, 전국에서 독립을 요구하는 만세 운동이 일어났어요." },
-    { q:"3·1운동 이후 1919년 중국 상하이에서 세워진 조직은?", choices:["대한민국 임시정부","국제연맹","조선어학회","신간회","독립협회"], correct:0, explain:"독립운동가들은 상하이에 대한민국 임시정부를 세우고 독립운동을 이어갔어요." },
-    { q:"대한민국 임시정부가 조직한, 일본군에 맞서 싸운 군대는?", choices:["의병","광복군","별기군","훈련도감","진위대"], correct:1, explain:"임시정부는 광복군을 만들어 일본에 맞서 싸웠어요." },
-    { q:"3·1운동을 대표하는 인물로, 만세운동에 앞장선 학생 독립운동가는?", choices:["유관순","신사임당","명성황후","선덕여왕","논개"], correct:0, explain:"유관순은 3·1운동에 앞장서다 붙잡혀서도 끝까지 독립을 외쳤어요." },
-    { q:"대한민국 임시정부를 이끌었던 대표적인 독립운동가는?", choices:["이순신","김구","세종대왕","안중근","을지문덕"], correct:1, explain:"김구 선생은 임시정부의 주석으로 독립운동을 이끌었어요." },
-    { q:"제2차 세계대전이 끝난 뒤인 1945년, 세계 평화를 위해 만들어진 국제기구는?", choices:["국제연맹","국제연합(UN)","유럽연합(EU)","세계무역기구(WTO)","아시아연합"], correct:1, explain:"1945년, 전쟁을 막고 평화를 지키기 위해 국제연합(UN)이 만들어졌어요." },
-    { q:"국제연합(UN) 본부는 어느 도시에 있나요?", choices:["런던","파리","뉴욕","제네바","도쿄"], correct:2, explain:"국제연합 본부는 미국 뉴욕에 있어요." },
-    { q:"국제연합(UN)이 만들어진 가장 중요한 목적은?", choices:["세계 평화와 안전 유지","세계 경제 통합","스포츠 교류","우주 개발","언어 통일"], correct:0, explain:"UN은 전쟁을 막고 세계 평화를 지키기 위해 만들어졌어요." },
-    { q:"국제연합을 상징하는 마크에는 지구본과 함께 무엇이 그려져 있나요?", choices:["독수리","올리브 가지","십자가","별과 달","왕관"], correct:1, explain:"올리브 가지는 평화를 상징해요." },
-    { q:"제2차 세계대전이 끝날 무렵, 연합국 지도자들이 모여 전후 처리를 논의한 회담은?", choices:["얄타 회담","파리 회담","베를린 회의","런던 조약","워싱턴 회의"], correct:0, explain:"얄타 회담에서 미국·영국·소련 지도자들이 전쟁 이후 문제를 논의했어요." },
-    { q:"연합국이 일본에 항복을 요구하며 발표한 선언은?", choices:["카이로 선언","포츠담 선언","대서양 헌장","베르사유 조약","얄타 협정"], correct:1, explain:"포츠담 선언에서 연합국은 일본에 즉시 항복할 것을 요구했어요." },
-    { q:"전쟁이 끝난 뒤 미국과 소련이 대립한 시기를 무엇이라 부르나요?", choices:["냉전","열전","전면전","대공황","세계대전"], correct:0, explain:"직접 싸우진 않았지만 서로 대립했던 시기를 '냉전'이라고 불러요." },
-    { q:"광복 이후 한반도는 어떤 위도선을 기준으로 남북으로 나뉘었나요?", choices:["30도선","38도선","45도선","50도선","60도선"], correct:1, explain:"광복 후 한반도는 38도선을 기준으로 남북으로 나뉘었어요." },
-    { q:"대한민국 정부가 수립된 연도는?", choices:["1945년","1948년","1950년","1953년","1960년"], correct:1, explain:"1948년, 대한민국 정부가 정식으로 수립됐어요." },
-    { q:"1943년, 처음으로 우리나라의 독립을 국제사회가 약속한 선언은?", choices:["카이로 선언","포츠담 선언","얄타 협정","베르사유 조약","대서양 헌장"], correct:0, explain:"카이로 선언에서 미국·영국·중국은 한국의 독립을 처음으로 약속했어요." },
-    { q:"제2차 세계대전 당시 미국은 어떤 정치 체제를 가진 나라였나요?", choices:["왕이 다스리는 나라","대통령이 이끄는 민주공화국","독재자가 다스리는 나라","여러 부족이 다스리는 나라","군대가 다스리는 나라"], correct:1, explain:"미국은 국민이 뽑은 대통령이 나라를 이끄는 민주공화국이었어요." },
-    { q:"유럽은 지구 전체 대륙 중 몇 개의 대륙 가운데 하나인가요?", choices:["5개","6개","7개","8개","4개"], correct:2, explain:"지구에는 아시아, 유럽, 아프리카, 북아메리카, 남아메리카, 오세아니아, 남극 이렇게 7개의 대륙이 있어요." },
-    { q:"태평양 전쟁의 주 무대가 된 곳은 어디인가요?", choices:["대서양과 유럽","태평양과 아시아","인도양과 아프리카","지중해","북극해"], correct:1, explain:"태평양 전쟁은 주로 태평양과 아시아 지역에서 벌어졌어요." },
-    { q:"일본은 어떤 지형적 특징을 가진 나라인가요?", choices:["아시아 동쪽의 섬나라","유럽의 반도 국가","아프리카의 사막 국가","남아메리카의 내륙국","오세아니아의 대륙국"], correct:0, explain:"일본은 아시아 동쪽에 있는 섬나라예요." },
-    { q:"독일은 어느 대륙의 어느 위치에 있나요?", choices:["유럽 중앙","아시아 서쪽","아프리카 북쪽","북아메리카 동쪽","오세아니아"], correct:0, explain:"독일은 유럽 중앙에 위치한 나라예요." },
-    { q:"영국은 어떤 지형적 특징을 가진 나라인가요?", choices:["유럽 서쪽의 섬나라","아시아의 반도 국가","아프리카의 섬나라","남아메리카의 내륙국","오세아니아의 섬나라"], correct:0, explain:"영국은 유럽 서쪽 바다에 있는 섬나라예요." },
-    { q:"소련(오늘날의 러시아)은 어떤 특징을 가진 나라인가요?", choices:["유럽에만 있는 작은 나라","유럽과 아시아에 걸친 매우 큰 나라","아프리카의 섬나라","오세아니아의 나라","남아메리카의 나라"], correct:1, explain:"소련(현재 러시아)은 유럽과 아시아에 걸쳐 있는 세계에서 가장 넓은 나라예요." },
-    { q:"이탈리아는 지도에서 어떤 모양으로 유명한가요?", choices:["장화 모양","원 모양","별 모양","삼각형 모양","사각형 모양"], correct:0, explain:"이탈리아는 지도에서 장화 모양을 한 나라로 유명해요." },
-    { q:"미국은 어느 대륙에 있나요?", choices:["유럽","아시아","북아메리카","남아메리카","아프리카"], correct:2, explain:"미국은 북아메리카 대륙에 있는 나라예요." },
-    { q:"노르망디 상륙작전이 이루어진 바다는?", choices:["태평양","대서양","인도양","지중해","북극해"], correct:1, explain:"노르망디는 프랑스 북부, 대서양과 가까운 해안이에요." },
-    { q:"제2차 세계대전 당시 영국의 총리로 강한 의지로 나라를 이끌었던 인물은?", choices:["처칠","대처","블레어","엘리자베스","뉴턴"], correct:0, explain:"처칠 총리는 뛰어난 연설과 리더십으로 영국을 이끌었어요." },
-    { q:"제2차 세계대전 대부분의 기간 동안 미국을 이끈 대통령은?", choices:["링컨","루스벨트","워싱턴","트루먼","케네디"], correct:1, explain:"루스벨트 대통령은 4번이나 대통령에 당선되며 전쟁 기간 미국을 이끌었어요." },
-    { q:"제2차 세계대전 당시 소련을 이끌었던 지도자는?", choices:["레닌","스탈린","고르바초프","푸틴","옐친"], correct:1, explain:"스탈린은 제2차 세계대전 당시 소련의 최고 지도자였어요." },
-    { q:"제2차 세계대전 당시 일본의 상징적 지도자였던 인물은?", choices:["천황 히로히토","도쿠가와 이에야스","오다 노부나가","메이지 천황","쇼군"], correct:0, explain:"히로히토 천황은 당시 일본의 상징적인 지도자였어요." },
-    { q:"나치 독일의 박해를 피해 숨어 지내며 일기를 쓴 것으로 유명한 소녀는?", choices:["안네 프랑크","헬렌 켈러","잔 다르크","나이팅게일","유관순"], correct:0, explain:"안네 프랑크는 숨어 지내던 시절의 이야기를 일기로 남겼고, 그 일기는 전쟁의 아픔을 알리는 소중한 기록이 되었어요." },
-    { q:"히틀러가 이끌었던 독일의 정당 이름은?", choices:["나치당","공산당","자유당","보수당","노동당"], correct:0, explain:"히틀러는 나치당을 이끌며 독일의 권력을 잡았어요." },
-    { q:"나치 독일이 특정 민족을 부당하게 대규모로 박해한 사건을 무엇이라 부르나요?", choices:["홀로코스트","르네상스","종교개혁","산업혁명","대공황"], correct:0, explain:"나치 독일은 유대인 등을 부당하게 박해했는데, 이를 홀로코스트라고 불러요. 매우 슬픈 역사적 사실이에요." },
-    { q:"전쟁 중 다치거나 어려움에 처한 사람들을 돕기 위해 활동하는 국제단체는?", choices:["국제 적십자사","국제연맹","국제올림픽위원회","유네스코","세계은행"], correct:0, explain:"국제 적십자사는 전쟁 중에도 다친 사람들을 돌보는 활동을 해요." },
-    { q:"광복 이후 대한민국을 상징하는 국기는?", choices:["태극기","무궁화기","오성홍기","유니언잭","성조기"], correct:0, explain:"태극기는 우리나라를 상징하는 소중한 국기예요." },
-    { q:"우리나라를 상징하는 나라꽃은?", choices:["무궁화","장미","벚꽃","튤립","해바라기"], correct:0, explain:"무궁화는 우리나라를 상징하는 나라꽃이에요." },
-    { q:"세계대전이 우리에게 주는 가장 큰 교훈은 무엇인가요?", choices:["평화의 소중함","무기의 발전","지도자의 힘","영토 확장의 중요성","경제 성장"], correct:0, explain:"큰 희생을 치른 전쟁의 역사는 평화가 얼마나 소중한지를 알려줘요." },
-    { q:"제2차 세계대전으로 인한 인명 피해 규모는 어느 정도였나요?", choices:["수백 명","수천 명","수만 명","수천만 명","피해가 거의 없었다"], correct:3, explain:"제2차 세계대전은 수천만 명이 목숨을 잃은, 인류 역사상 가장 큰 피해를 남긴 전쟁이에요." },
-    { q:"전쟁으로 인해 삶의 터전을 잃고 다른 곳으로 떠나야 했던 사람들을 무엇이라 부르나요?", choices:["난민","이민자","관광객","유학생","상인"], correct:0, explain:"전쟁을 피해 고향을 떠난 사람들을 난민이라고 불러요." },
-    { q:"1948년, 인간이라면 누구나 누려야 할 기본적인 권리를 담아 국제연합이 채택한 선언은?", choices:["세계인권선언","베르사유 조약","카이로 선언","포츠담 선언","대서양 헌장"], correct:0, explain:"세계인권선언은 모든 사람이 존엄하게 대우받아야 한다는 내용을 담고 있어요." },
-    { q:"국제 사회가 전쟁을 막기 위해 하는 노력으로 알맞은 것은?", choices:["외교와 국제기구를 통한 협력","무기를 더 많이 만들기","다른 나라와 교류 끊기","서로를 무시하기","정보를 숨기기"], correct:0, explain:"대화와 협력, 국제기구 활동은 전쟁을 막는 중요한 방법이에요." },
-    { q:"평화를 상징하는 동물과 식물로 자주 쓰이는 것은?", choices:["비둘기와 올리브 가지","독수리와 장미","사자와 튤립","호랑이와 대나무","용과 소나무"], correct:0, explain:"비둘기와 올리브 가지는 평화를 상징하는 대표적인 표현이에요." },
-    { q:"오늘날 우리가 평화를 지키기 위해 할 수 있는 가장 알맞은 일은?", choices:["서로 다름을 존중하고 대화하기","다른 나라를 무시하기","편을 나누어 싸우기","정보를 왜곡하기","무관심하게 지내기"], correct:0, explain:"서로의 차이를 이해하고 존중하는 태도가 평화의 시작이에요." },
-    { q:"우리나라가 광복을 맞이한 것을 기념하는 국경일은?", choices:["삼일절","광복절","개천절","한글날","현충일"], correct:1, explain:"매년 8월 15일은 광복절로, 우리나라가 독립한 것을 기념하는 날이에요." },
-    { q:"나라를 위해 목숨을 바친 순국선열을 기억해야 하는 이유는?", choices:["그들의 희생 덕분에 오늘의 자유가 있기 때문","옛날 이야기라 재미있어서","시험에 나오기 때문","유명한 사람이라서","특별한 이유는 없다"], correct:0, explain:"독립운동가와 순국선열의 희생이 있었기에 오늘날 우리가 자유를 누릴 수 있어요." },
-    { q:"독립운동가들을 기억하고 감사하는 마음을 가져야 하는 까닭은?", choices:["그들의 노력으로 나라를 되찾을 수 있었기 때문","유명해서","재미있는 이야기라서","시험 문제라서","특별히 없음"], correct:0, explain:"독립운동가들의 헌신 덕분에 우리는 광복을 맞이할 수 있었어요." },
-    { q:"세계 역사에서 '세계대전'은 총 몇 차례 있었나요?", choices:["1번","2번","3번","4번","5번"], correct:1, explain:"세계대전은 제1차 세계대전과 제2차 세계대전, 총 두 번 있었어요." },
-    { q:"제1차 세계대전이 끝난 해와 제2차 세계대전이 시작된 해 사이는 대략 몇 년인가요?", choices:["약 1년","약 5년","약 11년","약 21년","약 40년"], correct:3, explain:"1918년에서 1939년까지, 약 21년의 시간이 있었어요." },
-    { q:"제1차 세계대전과 제2차 세계대전 모두에 참전한 나라로 알맞은 것은?", choices:["영국","브라질","캐나다","멕시코","인도네시아"], correct:0, explain:"영국은 두 차례의 세계대전에 모두 참전했어요." },
-    { q:"'세계대전'이라는 이름이 붙은 이유는 무엇인가요?", choices:["세계 여러 나라가 전쟁에 참여했기 때문","무기가 세계 최고였기 때문","세계에서 가장 짧은 전쟁이라서","세계 지도를 바꾸지 않아서","특별한 이유는 없다"], correct:0, explain:"세계 곳곳의 많은 나라가 참전했기 때문에 '세계대전'이라고 불러요." },
-    { q:"전쟁이 끝난 뒤 냉전 시기에 대립했던 두 강대국은?", choices:["미국과 소련","영국과 프랑스","독일과 이탈리아","중국과 일본","한국과 북한"], correct:0, explain:"냉전 시기에는 미국과 소련이 서로 다른 체제를 내세우며 대립했어요." },
-    { q:"태평양 전쟁 시기, 일본에 지배받던 우리나라 사람들이 겪은 어려움으로 알맞은 것은?", choices:["강제 동원과 물자 수탈","자유로운 해외여행","풍족한 생활","자치권 확대","독립 국가 지위 유지"], correct:0, explain:"전쟁 시기 일본은 우리나라 사람들과 물자를 강제로 동원해 어려움을 겪게 했어요." },
-    { q:"일제가 전쟁 물자와 노동력을 위해 사람들을 강제로 동원한 것을 무엇이라 부르나요?", choices:["강제 동원","자유 이주","유학","관광","무역"], correct:0, explain:"많은 사람들이 강제로 노동이나 전쟁터에 동원되는 아픔을 겪었어요." },
-    { q:"일제가 우리 민족의 이름을 일본식으로 바꾸도록 강요한 정책은?", choices:["창씨개명","호패법","신분제","과거제","균역법"], correct:0, explain:"창씨개명은 우리 민족의 정체성을 지우려 한 일제의 강압적인 정책이었어요." },
-    { q:"일제강점기, 우리말과 우리글을 지키기 위해 노력한 단체는?", choices:["조선어학회","국제연맹","임시정부","적십자사","유엔"], correct:0, explain:"조선어학회는 한글을 연구하고 지키기 위해 힘쓴 단체예요." },
-    { q:"일제강점기 독립운동의 다양한 방법으로 알맞지 않은 것은?", choices:["무장 투쟁","외교 활동","교육과 문화 활동","일제와의 적극적인 협력","언론을 통한 활동"], correct:3, explain:"독립운동은 다양한 방법으로 이루어졌지만, 일제와의 협력은 독립운동이라 할 수 없어요." },
-    { q:"세계대전 이후 형성된 국제 질서의 중심에 있는 기구는?", choices:["국제연합(UN)","국제올림픽위원회","세계보건기구","국제축구연맹","세계은행"], correct:0, explain:"전쟁 이후 국제 사회는 국제연합(UN)을 중심으로 협력하는 질서를 만들었어요." },
-    { q:"오늘날 국제연합(UN)에는 대략 얼마나 많은 나라가 가입해 있나요?", choices:["약 10개국","약 50개국","약 100개국","약 190여 개국","약 300개국"], correct:3, explain:"오늘날 전 세계 대부분의 나라인 약 190여 개국이 UN에 가입해 있어요." },
-    { q:"국제연합 안전보장이사회의 상임이사국이 아닌 나라는?", choices:["미국","영국","프랑스","중국","독일"], correct:4, explain:"상임이사국은 미국, 영국, 프랑스, 러시아, 중국 5개국이며, 독일은 포함되지 않아요." },
-    { q:"전쟁이 끝난 뒤 전쟁 범죄를 저지른 사람들을 심판하기 위해 열린 재판으로 알맞은 것은?", choices:["뉘른베르크 재판","베르사유 재판","얄타 재판","카이로 재판","런던 재판"], correct:0, explain:"뉘른베르크 재판에서 전쟁 범죄를 저지른 사람들이 심판을 받았어요." },
-    { q:"오늘날에도 세계 평화를 위협하는 요소로 알맞은 것은?", choices:["지역 분쟁과 난민 문제","완전한 세계 평화","전쟁의 완전한 소멸","국제기구의 소멸","특별한 문제 없음"], correct:0, explain:"오늘날에도 여러 지역에서 분쟁과 난민 문제가 이어지고 있어 국제 사회의 노력이 필요해요." },
-    { q:"우리가 역사를, 특히 전쟁의 역사를 배우는 가장 중요한 이유는?", choices:["과거의 교훈으로 더 나은 미래를 만들기 위해","시험을 잘 보기 위해","옛날이야기가 재미있어서","어른들이 시켜서","특별한 이유는 없다"], correct:0, explain:"역사를 배우는 것은 과거의 실수를 되풀이하지 않고 더 나은 미래를 만들기 위해서예요." },
-    { q:"광복 이후 대한민국 정부가 정식으로 수립된 연도는?", choices:["1945년","1948년","1950년","1953년","1961년"], correct:1, explain:"1948년 8월 15일, 대한민국 정부가 정식으로 수립됐어요." },
-    { q:"대한민국의 초대 대통령은 누구인가요?", choices:["김구","이승만","박정희","김대중","안창호"], correct:1, explain:"이승만은 대한민국 정부 수립과 함께 초대 대통령이 되었어요." },
-    { q:"오늘날 남북을 나누고 있는 군사 경계선을 무엇이라 부르나요?", choices:["38도선","휴전선","국경선","해안선","경계도로"], correct:1, explain:"6·25 전쟁 이후 휴전선이 남북을 가로지르는 경계가 되었어요. 광복 직후에는 38도선이 기준이었어요." },
-    { q:"평화통일을 위해 우리가 가져야 할 마음가짐으로 가장 알맞은 것은?", choices:["서로를 이해하고 대화하려는 노력","무관심","대립과 경쟁만 강조하기","서로의 다름을 무시하기","특별한 노력이 필요 없음"], correct:0, explain:"평화통일을 위해서는 서로를 이해하고 꾸준히 대화하려는 노력이 필요해요." }
+  const questions = [
+    {
+      q: "1914년부터 1918년까지 여러 유럽 나라가 두 편으로 나뉘어 싸운 전쟁을 무엇이라고 부를까요?",
+      options: ["제1차 세계대전", "임진왜란", "십자군 전쟁", "남북전쟁"],
+      answerIndex: 0,
+      explain: "제1차 세계대전은 1914년부터 1918년까지 유럽을 중심으로 여러 나라가 두 편으로 나뉘어 싸운 전쟁이에요."
+    },
+    {
+      q: "제1차 세계대전이 시작되는 계기가 된 사건은 무엇일까요?",
+      options: ["오스트리아 황태자 암살 사건", "진주만 공습", "노르망디 상륙작전", "베를린 장벽 붕괴"],
+      answerIndex: 0,
+      explain: "1914년 오스트리아-헝가리 제국의 황태자가 사라예보에서 암살당한 사건이 제1차 세계대전의 도화선이 되었어요."
+    },
+    {
+      q: "제1차 세계대전 당시 군인들이 땅을 깊게 파고 그 안에 숨어 싸운 방식을 무엇이라고 부를까요?",
+      options: ["참호전", "기마전", "해상전", "공중전"],
+      answerIndex: 0,
+      explain: "제1차 세계대전에서는 병사들이 긴 도랑(참호)을 파고 그 안에서 오랫동안 대치하는 참호전이 자주 벌어졌어요."
+    },
+    {
+      q: "제1차 세계대전에서 독일, 오스트리아-헝가리 등이 속한 편을 무엇이라고 불렀을까요?",
+      options: ["연합국", "동맹국", "추축국", "중립국"],
+      answerIndex: 1,
+      explain: "제1차 세계대전에서 독일과 오스트리아-헝가리 등이 속한 편을 동맹국이라고 불렀어요."
+    },
+    {
+      q: "제1차 세계대전에서 영국, 프랑스, 러시아 등이 속한 편을 무엇이라고 불렀을까요?",
+      options: ["연합국", "동맹국", "식민국", "중립국"],
+      answerIndex: 0,
+      explain: "영국, 프랑스, 러시아 등이 함께한 편을 연합국이라고 불렀어요."
+    },
+    {
+      q: "제1차 세계대전은 몇 년에 끝났을까요?",
+      options: ["1918년", "1945년", "1905년", "1930년"],
+      answerIndex: 0,
+      explain: "제1차 세계대전은 1918년, 동맹국의 항복으로 끝이 났어요."
+    },
+    {
+      q: "제1차 세계대전을 끝내기 위해 맺은 조약의 이름은 무엇일까요?",
+      options: ["베르사유 조약", "강화도 조약", "포츠담 선언", "한일 병합 조약"],
+      answerIndex: 0,
+      explain: "1919년 파리 근처 베르사유에서 전쟁을 마무리 짓는 베르사유 조약이 맺어졌어요."
+    },
+    {
+      q: "제1차 세계대전 이후, 세계 평화를 지키기 위해 처음 만들어진 국제기구는 무엇일까요?",
+      options: ["국제연맹", "국제연합(UN)", "세계무역기구", "유네스코"],
+      answerIndex: 0,
+      explain: "제1차 세계대전 이후 다시는 큰 전쟁이 없기를 바라며 국제연맹이라는 기구가 만들어졌어요."
+    },
+    {
+      q: "제1차 세계대전 중 처음으로 전쟁터에 등장한 새로운 무기가 아닌 것은 무엇일까요?",
+      options: ["탱크", "독가스", "비행기", "스마트폰"],
+      answerIndex: 3,
+      explain: "제1차 세계대전 때 탱크, 독가스, 비행기 같은 새로운 무기가 처음 등장했어요. 스마트폰은 훨씬 뒤에 만들어졌어요."
+    },
+    {
+      q: "제1차 세계대전이 일어난 주요 무대는 어느 대륙이었을까요?",
+      options: ["유럽", "남아메리카", "오세아니아", "남극"],
+      answerIndex: 0,
+      explain: "제1차 세계대전은 주로 유럽 대륙에서 벌어졌어요."
+    },
+    {
+      q: "제2차 세계대전은 대략 몇 년부터 몇 년까지 있었던 전쟁일까요?",
+      options: ["1592년~1598년", "1910년~1945년", "1939년~1945년", "1950년~1953년"],
+      answerIndex: 2,
+      explain: "제2차 세계대전은 1939년에 시작되어 1945년에 끝난 전쟁이에요."
+    },
+    {
+      q: "제2차 세계대전은 독일이 어느 나라를 침공하면서 시작되었을까요?",
+      options: ["폴란드", "프랑스", "영국", "소련"],
+      answerIndex: 0,
+      explain: "1939년 9월, 독일이 폴란드를 침공하면서 제2차 세계대전이 시작되었어요."
+    },
+    {
+      q: "제2차 세계대전 당시 독일, 이탈리아, 일본이 속한 편을 무엇이라고 불렀을까요?",
+      options: ["연합국", "추축국", "중립국", "식민국"],
+      answerIndex: 1,
+      explain: "독일, 이탈리아, 일본이 함께한 편을 추축국이라고 불렀어요."
+    },
+    {
+      q: "제2차 세계대전 당시 미국, 영국, 소련, 중국 등이 속한 편을 무엇이라고 불렀을까요?",
+      options: ["연합국", "추축국", "동맹국", "중립국"],
+      answerIndex: 0,
+      explain: "미국, 영국, 소련, 중국 등 여러 나라가 힘을 합친 편을 연합국이라고 불렀어요."
+    },
+    {
+      q: "제2차 세계대전 당시 독일을 이끌며 전쟁을 일으킨 지도자는 누구일까요?",
+      options: ["나폴레옹", "히틀러", "링컨", "처칠"],
+      answerIndex: 1,
+      explain: "히틀러는 제2차 세계대전 당시 독일의 지도자로, 전쟁을 일으키고 많은 사람들에게 큰 고통을 주었어요."
+    },
+    {
+      q: "제2차 세계대전 당시 이탈리아를 이끈 지도자는 누구일까요?",
+      options: ["무솔리니", "히틀러", "처칠", "스탈린"],
+      answerIndex: 0,
+      explain: "무솔리니는 제2차 세계대전 당시 이탈리아를 이끈 지도자였어요."
+    },
+    {
+      q: "제2차 세계대전 당시 영국의 총리로, 국민들을 이끌며 끝까지 맞서 싸운 인물은 누구일까요?",
+      options: ["처칠", "히틀러", "루스벨트", "스탈린"],
+      answerIndex: 0,
+      explain: "윈스턴 처칠은 제2차 세계대전 당시 영국 총리로, 국민을 격려하며 전쟁을 이끌었어요."
+    },
+    {
+      q: "제2차 세계대전 당시 미국의 대통령은 누구였을까요?",
+      options: ["루스벨트", "링컨", "워싱턴", "케네디"],
+      answerIndex: 0,
+      explain: "프랭클린 루스벨트는 제2차 세계대전 당시 미국의 대통령이었어요."
+    },
+    {
+      q: "제2차 세계대전 당시 소련을 이끈 지도자는 누구일까요?",
+      options: ["스탈린", "레닌", "고르바초프", "푸틴"],
+      answerIndex: 0,
+      explain: "스탈린은 제2차 세계대전 당시 소련을 이끈 지도자였어요."
+    },
+    {
+      q: "독일, 이탈리아, 일본이 서로 도우며 함께 싸우기로 약속한 것을 무엇이라고 부를까요?",
+      options: ["삼국 동맹", "베르사유 조약", "먼로 선언", "카이로 선언"],
+      answerIndex: 0,
+      explain: "독일, 이탈리아, 일본은 서로 협력하기로 약속한 삼국 동맹을 맺었어요."
+    },
+    {
+      q: "제2차 세계대전 중, 연합군이 프랑스 노르망디 해안에 상륙해 유럽 반격을 시작한 작전을 무엇이라 부를까요?",
+      options: ["노르망디 상륙작전", "진주만 공습", "만주사변", "임진왜란"],
+      answerIndex: 0,
+      explain: "1944년 6월, 연합군은 노르망디 해안에 상륙해 나치 독일에 맞서는 큰 반격을 시작했어요."
+    },
+    {
+      q: "노르망디 상륙작전이 시작된 날을 부르는 이름은 무엇일까요?",
+      options: ["D-데이", "V-데이", "종전기념일", "개천절"],
+      answerIndex: 0,
+      explain: "노르망디 상륙작전이 시작된 1944년 6월 6일을 D-데이라고 불러요."
+    },
+    {
+      q: "제2차 세계대전 중 독일군이 소련의 도시를 두고 벌인 큰 전투로, 독일이 크게 패배한 전투는 무엇일까요?",
+      options: ["스탈린그라드 전투", "노르망디 상륙작전", "진주만 공습", "미드웨이 해전"],
+      answerIndex: 0,
+      explain: "스탈린그라드 전투는 독일군이 소련의 스탈린그라드를 두고 벌인 큰 전투로, 독일의 큰 패배로 끝났어요."
+    },
+    {
+      q: "독일이 영국을 공격하기 위해 벌인 큰 공습 작전을 무엇이라고 부를까요?",
+      options: ["영국 본토 항공전", "노르망디 상륙작전", "미드웨이 해전", "진주만 공습"],
+      answerIndex: 0,
+      explain: "영국 본토 항공전은 독일 공군이 영국을 굴복시키기 위해 벌인 대규모 공습이었어요."
+    },
+    {
+      q: "제2차 세계대전 초반, 프랑스는 독일에게 점령당한 뒤 어떤 상태가 되었을까요?",
+      options: ["독일의 지배를 받는 상태가 되었다", "오히려 독일을 점령했다", "전쟁에 참여하지 않았다", "아무 변화가 없었다"],
+      answerIndex: 0,
+      explain: "1940년 프랑스는 독일군에게 점령당해 나라의 많은 부분이 독일의 영향 아래 놓이게 되었어요."
+    },
+    {
+      q: "영국이 나치 독일의 폭격에도 굴복하지 않고 끝까지 저항할 수 있었던 이유로 알맞은 것은 무엇일까요?",
+      options: ["처칠의 지도력과 국민들의 단결", "다른 나라의 침공 포기", "전쟁이 바로 끝나서", "독일과 동맹을 맺어서"],
+      answerIndex: 0,
+      explain: "영국은 처칠의 지도력과 국민들의 단결된 저항으로 큰 폭격 속에서도 버텨냈어요."
+    },
+    {
+      q: "제2차 세계대전이 유럽에서 끝난 날을 부르는 이름은 무엇일까요?",
+      options: ["유럽 전승 기념일(V-E 데이)", "광복절", "D-데이", "현충일"],
+      answerIndex: 0,
+      explain: "1945년 5월 8일, 독일이 항복하면서 유럽에서 전쟁이 끝난 날을 유럽 전승 기념일이라고 불러요."
+    },
+    {
+      q: "독일의 수도로, 제2차 세계대전 막바지에 연합군에게 함락된 도시는 어디일까요?",
+      options: ["베를린", "파리", "런던", "모스크바"],
+      answerIndex: 0,
+      explain: "1945년, 소련군을 비롯한 연합군은 독일의 수도 베를린을 함락시켰고 곧 독일은 항복했어요."
+    },
+    {
+      q: "전쟁 중 프랑스에서 독일 점령에 맞서 몰래 싸운 사람들을 무엇이라고 불렀을까요?",
+      options: ["레지스탕스", "게릴라", "동맹군", "연합군"],
+      answerIndex: 0,
+      explain: "레지스탕스는 독일 점령에 맞서 비밀리에 저항 운동을 벌인 프랑스 사람들을 말해요."
+    },
+    {
+      q: "제2차 세계대전 당시 유대인 소녀로, 다락방에 숨어 지내며 쓴 일기로 유명한 인물은 누구일까요?",
+      options: ["안네 프랑크", "헬렌 켈러", "잔 다르크", "마리 퀴리"],
+      answerIndex: 0,
+      explain: "안네 프랑크는 나치를 피해 숨어 지내며 쓴 일기로 유명한 유대인 소녀예요. 이 일기는 훗날 책으로 출판되었어요."
+    },
+    {
+      q: "제2차 세계대전 중 나치 독일이 유대인 등을 조직적으로 박해하고 목숨을 빼앗은 일을 무엇이라고 부를까요?",
+      options: ["홀로코스트", "십자군 전쟁", "아편전쟁", "노예 무역"],
+      answerIndex: 0,
+      explain: "홀로코스트는 나치 독일이 유대인을 비롯한 많은 사람들을 조직적으로 박해하고 희생시킨 비극적인 사건이에요."
+    },
+    {
+      q: "전쟁 중 자신의 공장에서 일하는 유대인들을 위험에서 구해준 독일인 사업가는 누구일까요?",
+      options: ["오스카 쉰들러", "히틀러", "무솔리니", "처칠"],
+      answerIndex: 0,
+      explain: "오스카 쉰들러는 자신의 공장에서 일하던 많은 유대인들을 위험에서 구해준 것으로 알려진 독일인 사업가예요."
+    },
+    {
+      q: "전쟁이 끝난 후, 나치 독일의 전쟁 범죄를 재판한 곳은 어디였을까요?",
+      options: ["뉘른베르크 재판", "베르사유 조약", "포츠담 회담", "얄타 회담"],
+      answerIndex: 0,
+      explain: "뉘른베르크 재판은 전쟁이 끝난 뒤 나치 독일의 지도자들이 저지른 범죄를 심판한 재판이에요."
+    },
+    {
+      q: "제2차 세계대전 후 독일은 어떻게 나뉘게 되었을까요?",
+      options: ["동독과 서독으로 나뉘었다", "세 나라로 나뉘었다", "나뉘지 않았다", "다른 나라에 합쳐졌다"],
+      answerIndex: 0,
+      explain: "전쟁이 끝난 뒤 독일은 동독과 서독으로 나뉘어 오랫동안 서로 다른 체제로 지내게 되었어요."
+    },
+    {
+      q: "전쟁 중 다친 병사와 시민들을 돕기 위해 활동한 국제 구호 단체는 무엇일까요?",
+      options: ["적십자사", "국제연합", "유네스코", "세계보건기구"],
+      answerIndex: 0,
+      explain: "적십자사는 전쟁 중 다친 사람들을 돌보고 돕는 활동을 해온 국제 구호 단체예요."
+    },
+    {
+      q: "1941년 일본이 미국 하와이의 해군 기지를 기습 공격한 사건을 무엇이라고 부를까요?",
+      options: ["진주만 공습", "노르망디 상륙작전", "미드웨이 해전", "만주사변"],
+      answerIndex: 0,
+      explain: "1941년 12월, 일본은 하와이 진주만에 있는 미국 해군 기지를 기습 공격했어요. 이 사건으로 미국이 전쟁에 참여하게 되었어요."
+    },
+    {
+      q: "진주만 공습 이후 미국은 어떤 결정을 내렸을까요?",
+      options: ["전쟁에 정식으로 참여하기로 했다", "전쟁에서 완전히 물러났다", "일본과 동맹을 맺었다", "아무 반응도 하지 않았다"],
+      answerIndex: 0,
+      explain: "진주만 공습을 당한 미국은 곧바로 일본에 전쟁을 선포하며 제2차 세계대전에 본격적으로 참여했어요."
+    },
+    {
+      q: "태평양전쟁에서 미국이 일본 해군에 큰 승리를 거두며 전세를 뒤집은 해전은 무엇일까요?",
+      options: ["미드웨이 해전", "노량 해전", "한산도 대첩", "명량 해전"],
+      answerIndex: 0,
+      explain: "1942년 미드웨이 해전에서 미국은 일본 해군에 큰 승리를 거두며 태평양전쟁의 흐름을 바꾸었어요."
+    },
+    {
+      q: "1945년, 미국이 일본의 항복을 이끌어내기 위해 일본의 두 도시에 떨어뜨린 무기는 무엇일까요?",
+      options: ["원자폭탄", "독가스", "생화학무기", "레이저 무기"],
+      answerIndex: 0,
+      explain: "1945년 8월, 미국은 히로시마와 나가사키에 원자폭탄을 떨어뜨렸고, 이는 일본이 항복하는 계기 중 하나가 되었어요."
+    },
+    {
+      q: "1945년 원자폭탄이 떨어진 일본의 두 도시는 어디일까요?",
+      options: ["히로시마와 나가사키", "도쿄와 오사카", "교토와 오사카", "삿포로와 도쿄"],
+      answerIndex: 0,
+      explain: "1945년 8월, 히로시마와 나가사키에 원자폭탄이 떨어졌고 많은 사람들이 큰 피해를 입었어요."
+    },
+    {
+      q: "일본이 항복을 선언한 것은 몇 년도였을까요?",
+      options: ["1945년", "1950년", "1939년", "1930년"],
+      answerIndex: 0,
+      explain: "1945년 8월, 일본이 항복을 선언하면서 제2차 세계대전이 완전히 끝났어요."
+    },
+    {
+      q: "일본의 식민 지배를 받던 우리나라가 광복을 맞이한 날은 언제일까요?",
+      options: ["1945년 8월 15일", "1950년 6월 25일", "1919년 3월 1일", "1910년 8월 29일"],
+      answerIndex: 0,
+      explain: "1945년 8월 15일, 일본이 항복하면서 우리나라는 일제의 식민 지배에서 벗어나 광복을 맞이했어요."
+    },
+    {
+      q: "제2차 세계대전 이전, 일본이 중국 만주 지역을 침략하며 일으킨 사건은 무엇일까요?",
+      options: ["만주사변", "진주만 공습", "미드웨이 해전", "한산도 대첩"],
+      answerIndex: 0,
+      explain: "1931년 일본은 중국 만주 지역을 침략하는 만주사변을 일으켰어요. 이는 일본이 아시아에서 전쟁을 확대해 나가는 시작이었어요."
+    },
+    {
+      q: "태평양전쟁 당시 일본과 맞서 싸운 나라가 아닌 곳은 어디일까요?",
+      options: ["미국", "영국", "중국", "독일"],
+      answerIndex: 3,
+      explain: "독일은 일본과 함께 추축국으로 협력한 나라였어요. 미국, 영국, 중국 등은 일본과 맞서 싸운 연합국이었어요."
+    },
+    {
+      q: "전쟁이 끝난 뒤, 승전국들이 일본의 항복 조건 등을 발표한 선언은 무엇일까요?",
+      options: ["포츠담 선언", "베르사유 조약", "삼국 동맹", "먼로 선언"],
+      answerIndex: 0,
+      explain: "1945년 포츠담 선언을 통해 연합국은 일본에게 항복을 요구하는 조건을 발표했어요."
+    },
+    {
+      q: "전쟁 중 남자들이 전쟁터로 떠나면서, 공장에서 대신 일하게 된 사람들은 주로 누구였을까요?",
+      options: ["여성들", "어린이들", "노인들만", "외국 관광객"],
+      answerIndex: 0,
+      explain: "전쟁으로 많은 남성들이 군대에 나가면서, 여성들이 공장 등에서 물건을 만드는 중요한 역할을 맡게 되었어요."
+    },
+    {
+      q: "전쟁 중 물자가 부족해지자 정부가 생활필수품을 제한해서 나눠준 제도를 무엇이라고 부를까요?",
+      options: ["배급제", "무역 자유화", "화폐 개혁", "토지 개혁"],
+      answerIndex: 0,
+      explain: "전쟁 중에는 물자가 부족해서 정부가 식량이나 생활필수품을 정해진 양만큼 나눠주는 배급제를 실시했어요."
+    },
+    {
+      q: "제2차 세계대전 중 적국의 암호를 풀어내는 것이 전쟁의 승패에 중요한 영향을 준 이유는 무엇일까요?",
+      options: ["적의 계획을 미리 알 수 있었기 때문에", "암호가 예뻤기 때문에", "암호를 풀면 상금을 받아서", "단순한 취미 활동이어서"],
+      answerIndex: 0,
+      explain: "적의 암호를 풀면 상대방의 작전 계획을 미리 알 수 있어서 전쟁에서 큰 도움이 되었어요."
+    },
+    {
+      q: "제2차 세계대전 중 하늘에서 적의 비행기나 배를 미리 알아내기 위해 개발된 기술은 무엇일까요?",
+      options: ["레이더", "인터넷", "스마트폰", "텔레비전 리모컨"],
+      answerIndex: 0,
+      explain: "레이더는 전파를 이용해 멀리 있는 비행기나 배를 미리 알아내는 기술로, 전쟁 중 크게 발전했어요."
+    },
+    {
+      q: "전쟁으로 폭격을 피하기 위해 도시의 어린이들을 시골로 옮기는 것을 무엇이라고 부를까요?",
+      options: ["소개(疏開)", "이민", "유학", "귀향"],
+      answerIndex: 0,
+      explain: "폭격의 위험이 있는 도시에서 어린이들을 안전한 시골로 옮기는 것을 소개라고 해요. 전쟁 중 영국 등에서 많이 이루어졌어요."
+    },
+    {
+      q: "전쟁 중 군인들에게 소식을 전하거나 국민들의 사기를 북돋우기 위해 많이 사용된 매체는 무엇일까요?",
+      options: ["라디오", "인터넷", "스마트폰", "이메일"],
+      answerIndex: 0,
+      explain: "전쟁 당시에는 인터넷이 없었기 때문에 라디오가 소식을 전하고 사람들의 마음을 하나로 모으는 중요한 역할을 했어요."
+    },
+    {
+      q: "전쟁 중 탱크나 비행기 같은 무기를 많이 만들기 위해 나라 전체의 산업이 어떻게 바뀌었을까요?",
+      options: ["전쟁 물자를 만드는 데 집중했다", "장난감 산업만 커졌다", "농사를 전혀 짓지 않았다", "아무 변화도 없었다"],
+      answerIndex: 0,
+      explain: "전쟁 중에는 많은 공장이 탱크, 비행기, 무기 등 전쟁에 필요한 물자를 만드는 데 집중했어요."
+    },
+    {
+      q: "제2차 세계대전 당시, 전쟁에서 다친 사람들을 치료하기 위한 의료 기술은 어떻게 되었을까요?",
+      options: ["빠르게 발전했다", "전혀 발전하지 않았다", "오히려 사라졌다", "필요가 없었다"],
+      answerIndex: 0,
+      explain: "전쟁 중 많은 부상자를 치료해야 했기 때문에 응급 치료와 의료 기술이 빠르게 발전했어요."
+    },
+    {
+      q: "전쟁 중 국민들에게 저축을 권하고 전쟁 비용을 마련하기 위해 정부가 발행한 것은 무엇일까요?",
+      options: ["전쟁 채권", "복권", "상품권", "우표"],
+      answerIndex: 0,
+      explain: "전쟁 채권은 정부가 전쟁에 필요한 돈을 마련하기 위해 국민들에게 판매한 채권이에요."
+    },
+    {
+      q: "전쟁 중 여성들이 사회 여러 분야에서 활발히 일하게 되면서 이후 사회에 어떤 영향을 주었을까요?",
+      options: ["여성의 사회 참여가 늘어나는 계기가 되었다", "여성의 사회 참여가 완전히 사라졌다", "아무 영향도 없었다", "여성은 집안일만 하게 되었다"],
+      answerIndex: 0,
+      explain: "전쟁 중 여성들이 다양한 일을 맡으면서, 전쟁 이후에도 여성의 사회 참여가 확대되는 계기가 되었어요."
+    },
+    {
+      q: "제2차 세계대전이 완전히 끝난 것은 어느 나라의 항복 이후였을까요?",
+      options: ["일본", "독일", "이탈리아", "프랑스"],
+      answerIndex: 0,
+      explain: "1945년 5월 독일이 먼저 항복했고, 그해 8월 일본이 항복하면서 제2차 세계대전이 완전히 끝났어요."
+    },
+    {
+      q: "제2차 세계대전이 끝난 뒤, 다시는 큰 전쟁이 없기를 바라며 만들어진 국제기구는 무엇일까요?",
+      options: ["국제연합(UN)", "국제연맹", "세계무역기구", "유럽연합"],
+      answerIndex: 0,
+      explain: "제2차 세계대전이 끝난 뒤, 세계 여러 나라는 평화를 지키기 위해 국제연합(UN)을 만들었어요."
+    },
+    {
+      q: "국제연합(UN)이 만들어진 가장 큰 목적은 무엇일까요?",
+      options: ["세계 평화와 안전을 지키기 위해서", "특정 나라의 이익을 위해서", "전쟁 무기를 개발하기 위해서", "올림픽을 개최하기 위해서"],
+      answerIndex: 0,
+      explain: "국제연합(UN)은 전쟁을 막고 세계 평화와 안전을 지키기 위한 목적으로 만들어졌어요."
+    },
+    {
+      q: "전쟁이 끝난 뒤 승전국들이 모여 전후 처리를 논의한 회담으로 알맞은 것은 무엇일까요?",
+      options: ["얄타 회담", "베르사유 조약", "삼국 동맹", "판문점 회담"],
+      answerIndex: 0,
+      explain: "얄타 회담은 제2차 세계대전이 끝나갈 무렵 미국, 영국, 소련 지도자들이 모여 전후 처리를 논의한 회담이에요."
+    },
+    {
+      q: "제2차 세계대전 이후 미국과 소련을 중심으로 오랫동안 이어진 긴장 관계를 무엇이라고 부를까요?",
+      options: ["냉전", "열전", "십자군 전쟁", "아편전쟁"],
+      answerIndex: 0,
+      explain: "냉전은 직접적인 전투 없이 미국과 소련이 오랫동안 서로 대립했던 시기를 말해요."
+    },
+    {
+      q: "제2차 세계대전 이후, 여러 식민지 나라들에게 나타난 공통적인 변화는 무엇일까요?",
+      options: ["독립하는 나라들이 늘어났다", "식민 지배가 더 심해졌다", "아무 변화가 없었다", "모든 나라가 하나로 합쳐졌다"],
+      answerIndex: 0,
+      explain: "전쟁이 끝난 뒤 여러 식민지 나라들이 독립을 이루며 새로운 국가로 나아가기 시작했어요."
+    },
+    {
+      q: "우리나라는 광복 이후 남과 북으로 나뉘게 되었는데, 이는 어떤 강대국들의 영향을 받았을까요?",
+      options: ["미국과 소련", "영국과 프랑스", "독일과 이탈리아", "중국과 일본"],
+      answerIndex: 0,
+      explain: "광복 이후 우리나라는 미국과 소련의 영향을 받아 38도선을 경계로 남과 북으로 나뉘게 되었어요."
+    },
+    {
+      q: "전쟁이 남긴 교훈으로 가장 알맞은 것은 무엇일까요?",
+      options: ["평화의 소중함을 기억해야 한다", "전쟁은 무조건 좋은 것이다", "역사를 배울 필요가 없다", "전쟁은 아무 문제도 없다"],
+      answerIndex: 0,
+      explain: "두 번의 세계대전을 겪은 사람들은 평화가 얼마나 소중한지 깨닫고, 이를 지키기 위해 노력하게 되었어요."
+    },
+    {
+      q: "제2차 세계대전 이후, 유럽 여러 나라들이 서로 협력하기 위해 만든 것과 관련 있는 조직은 무엇일까요?",
+      options: ["유럽연합(EU)", "동남아시아국가연합(ASEAN)", "아프리카연합(AU)", "태평양 동맹"],
+      answerIndex: 0,
+      explain: "전쟁을 겪은 유럽 나라들은 서로 협력하고 다시는 전쟁이 없도록 하기 위해 훗날 유럽연합(EU) 같은 협력체를 만들었어요."
+    },
+    {
+      q: "세계대전과 같은 비극이 되풀이되지 않도록 오늘날 우리가 할 수 있는 일로 알맞은 것은 무엇일까요?",
+      options: ["역사를 배우고 평화를 소중히 여긴다", "다른 나라를 미워한다", "전쟁 이야기를 잊어버린다", "무기를 많이 만든다"],
+      answerIndex: 0,
+      explain: "역사를 배우고 평화의 소중함을 기억하는 것이 비극이 되풀이되지 않도록 하는 첫걸음이에요."
+    },
+    {
+      q: "제1차 세계대전 중 미국이 전쟁에 참여하기 시작한 것은 대략 언제였을까요?",
+      options: ["1917년", "1914년", "1939년", "1945년"],
+      answerIndex: 0,
+      explain: "미국은 전쟁이 시작된 지 얼마 뒤인 1917년에 연합국 편으로 제1차 세계대전에 참여했어요."
+    },
+    {
+      q: "제1차 세계대전 당시, 오스만 제국이 속했던 편은 어디였을까요?",
+      options: ["동맹국", "연합국", "중립국", "추축국"],
+      answerIndex: 0,
+      explain: "오스만 제국은 제1차 세계대전 당시 독일과 함께 동맹국 편에서 싸웠어요."
+    },
+    {
+      q: "제2차 세계대전 중 됭케르크 해변에서 많은 영국·프랑스 군인들을 배로 실어 나른 사건을 무엇이라고 부를까요?",
+      options: ["됭케르크 철수 작전", "노르망디 상륙작전", "진주만 공습", "미드웨이 해전"],
+      answerIndex: 0,
+      explain: "됭케르크 철수 작전은 1940년, 포위된 영국·프랑스 군인들을 여러 배를 동원해 안전하게 구출한 작전이에요."
+    },
+    {
+      q: "제2차 세계대전 당시 독일이 영국의 도시들을 계속해서 폭격한 것을 무엇이라고 부를까요?",
+      options: ["런던 대공습", "노르망디 상륙작전", "진주만 공습", "미드웨이 해전"],
+      answerIndex: 0,
+      explain: "런던 대공습은 독일 공군이 런던 등 영국의 도시들을 여러 달 동안 반복해서 폭격한 사건이에요."
+    },
+    {
+      q: "폴란드의 수도 바르샤바에서 시민들이 독일 점령에 맞서 봉기를 일으킨 사건을 무엇이라고 부를까요?",
+      options: ["바르샤바 봉기", "노르망디 상륙작전", "미드웨이 해전", "진주만 공습"],
+      answerIndex: 0,
+      explain: "바르샤바 봉기는 폴란드 시민들이 독일 점령에 맞서 자유를 되찾기 위해 일으킨 저항 운동이에요."
+    },
+    {
+      q: "제2차 세계대전 당시 캐나다, 호주, 인도 등은 어느 편에서 싸웠을까요?",
+      options: ["연합국", "추축국", "중립국", "동맹국"],
+      answerIndex: 0,
+      explain: "캐나다, 호주, 인도 등은 영국과 함께 연합국 편에서 전쟁에 참여했어요."
+    },
+    {
+      q: "히틀러는 전쟁이 막바지에 이르렀을 때 어떻게 되었을까요?",
+      options: ["베를린이 함락되기 직전 스스로 목숨을 끊었다", "끝까지 승리했다", "다른 나라로 망명해 평화롭게 살았다", "전쟁에서 큰 상을 받았다"],
+      answerIndex: 0,
+      explain: "1945년 베를린이 연합군에게 함락되기 직전, 히틀러는 지하 벙커에서 스스로 목숨을 끊었어요."
+    },
+    {
+      q: "이탈리아의 지도자 무솔리니는 전쟁 막바지에 어떻게 되었을까요?",
+      options: ["이탈리아 시민들에게 붙잡혀 처형당했다", "끝까지 권력을 유지했다", "미국 대통령이 되었다", "노벨상을 받았다"],
+      answerIndex: 0,
+      explain: "무솔리니는 전쟁이 끝나갈 무렵 이탈리아 시민들에게 붙잡혀 처형당했어요."
+    },
+    {
+      q: "일본이 항복 문서에 공식 서명한 곳은 어디였을까요?",
+      options: ["미주리호 군함 위", "판문점", "베르사유 궁전", "포츠담"],
+      answerIndex: 0,
+      explain: "1945년 9월, 일본은 도쿄만에 정박한 미국 군함 미주리호 위에서 항복 문서에 서명했어요."
+    },
+    {
+      q: "일본이 항복한 날을 기념하는 날을 영어로 무엇이라고 부를까요?",
+      options: ["V-J 데이", "D-데이", "V-E 데이", "V-K 데이"],
+      answerIndex: 0,
+      explain: "일본이 항복한 날을 기념하는 날을 V-J 데이(Victory over Japan Day)라고 불러요."
+    },
+    {
+      q: "전쟁이 끝난 뒤 미국이 유럽의 여러 나라들이 다시 일어설 수 있도록 도와준 지원 계획을 무엇이라고 부를까요?",
+      options: ["마셜 플랜", "뉴딜 정책", "삼국 동맹", "베르사유 조약"],
+      answerIndex: 0,
+      explain: "마셜 플랜은 전쟁이 끝난 뒤 미국이 유럽 여러 나라의 경제 재건을 돕기 위해 세운 지원 계획이에요."
+    },
+    {
+      q: "국제연합(UN)의 본부는 어느 도시에 있을까요?",
+      options: ["뉴욕", "런던", "파리", "도쿄"],
+      answerIndex: 0,
+      explain: "국제연합(UN)의 본부는 미국 뉴욕에 있어요."
+    },
+    {
+      q: "국제연합(UN)에서 세계 평화와 관련된 중요한 결정을 내리는 대표 기관은 무엇일까요?",
+      options: ["안전보장이사회", "세계보건기구", "국제올림픽위원회", "국제통화기금"],
+      answerIndex: 0,
+      explain: "안전보장이사회는 국제연합(UN)에서 세계 평화와 안전에 관한 중요한 결정을 내리는 기관이에요."
+    },
+    {
+      q: "제2차 세계대전 중 유대인들이 강제로 모여 살아야 했던 좁고 열악한 구역을 무엇이라고 부를까요?",
+      options: ["게토", "빌리지", "타운", "다운타운"],
+      answerIndex: 0,
+      explain: "게토는 나치 독일이 유대인들을 강제로 모아 살게 한 좁고 열악한 구역을 말해요."
+    },
+    {
+      q: "전쟁 중 다른 나라로 피란을 떠나야 했던 사람들을 무엇이라고 부를까요?",
+      options: ["난민", "여행객", "이민자", "외교관"],
+      answerIndex: 0,
+      explain: "난민은 전쟁이나 위험을 피해 다른 지역이나 나라로 떠난 사람들을 말해요."
+    },
+    {
+      q: "제2차 세계대전이 끝난 뒤, 우리나라는 남과 북으로 나뉘어 각각 다른 정부가 세워졌는데 이는 몇 년의 일이었을까요?",
+      options: ["1948년", "1945년", "1950년", "1953년"],
+      answerIndex: 0,
+      explain: "1948년, 남쪽에는 대한민국 정부가, 북쪽에는 북한 정부가 각각 세워지며 남북이 나뉘게 되었어요."
+    },
+    {
+      q: "제2차 세계대전 이후 한반도를 둘로 나누는 기준이 된 위도선은 무엇일까요?",
+      options: ["38도선", "40도선", "휴전선만 존재", "50도선"],
+      answerIndex: 0,
+      explain: "38도선은 광복 이후 미국과 소련이 한반도를 임시로 나누기 위해 정한 위도선이에요."
+    },
+    {
+      q: "제2차 세계대전 당시 일본에 맞서 싸운 중국의 지도자는 누구였을까요?",
+      options: ["장제스", "마오쩌둥", "덩샤오핑", "시진핑"],
+      answerIndex: 0,
+      explain: "장제스는 제2차 세계대전 당시 중국을 이끌며 일본에 맞서 싸운 지도자였어요."
+    },
+    {
+      q: "전쟁 당시 하늘에서 적의 도시나 시설을 공격하는 것을 무엇이라고 부를까요?",
+      options: ["폭격", "봉쇄", "협상", "무역"],
+      answerIndex: 0,
+      explain: "폭격은 비행기를 이용해 하늘에서 적의 도시나 시설을 공격하는 것을 말해요."
+    },
+    {
+      q: "전쟁 중 바다를 건너는 배를 공격하기 위해 개발된, 물속에서 다니는 배는 무엇일까요?",
+      options: ["잠수함", "요트", "유람선", "화물선만 존재"],
+      answerIndex: 0,
+      explain: "잠수함은 물속에 숨어 다니며 적의 배를 공격할 수 있는 군함으로, 제2차 세계대전에서 널리 사용되었어요."
+    },
+    {
+      q: "전쟁 중 하늘에서 적을 공격하거나 정찰하는 데 사용된 대표적인 무기는 무엇일까요?",
+      options: ["전투기", "자동차", "자전거", "기차"],
+      answerIndex: 0,
+      explain: "전투기는 하늘에서 적의 비행기와 싸우거나 지상을 공격하는 데 사용된 대표적인 무기예요."
+    },
+    {
+      q: "전쟁 중 병사와 물자를 실어 나르기 위해 육지에서 널리 사용된 대표적인 무기는 무엇일까요?",
+      options: ["탱크", "돛단배", "인력거", "가마"],
+      answerIndex: 0,
+      explain: "탱크는 두꺼운 철판으로 둘러싸여 있어 총알을 막아내며 육지에서 이동할 수 있는 대표적인 무기예요."
+    },
+    {
+      q: "제2차 세계대전 중 미국이 여성과 소수 인종을 포함해 다양한 사람들을 군수 공장에 고용한 이유는 무엇일까요?",
+      options: ["전쟁 물자를 많이 만들 일손이 부족했기 때문에", "재미로 고용한 것", "법으로 강요되어서만", "다른 이유는 전혀 없었다"],
+      answerIndex: 0,
+      explain: "전쟁 중 많은 남성들이 군대에 나가면서 일손이 부족해지자, 여성과 다양한 사람들이 군수 공장에서 일하게 되었어요."
+    },
+    {
+      q: "전쟁이 끝난 뒤 여러 나라에서 여성의 사회적 권리(투표권 등)가 어떻게 변화했을까요?",
+      options: ["점차 확대되는 경우가 많았다", "완전히 사라졌다", "전혀 변화가 없었다", "오히려 줄어들었다"],
+      answerIndex: 0,
+      explain: "전쟁을 겪으며 여성들의 사회 참여가 늘어나면서, 이후 여성의 투표권 등 사회적 권리가 점차 확대되는 나라들이 많아졌어요."
+    },
+    {
+      q: "전쟁 중 국민들에게 협력과 절약을 부탁하기 위해 정부가 만든 그림이나 문구가 담긴 종이를 무엇이라고 부를까요?",
+      options: ["포스터", "지폐", "우표", "졸업장"],
+      answerIndex: 0,
+      explain: "포스터는 전쟁 중 국민들에게 절약, 협력, 참전 독려 등의 메시지를 전하기 위해 널리 사용된 홍보물이에요."
+    },
+    {
+      q: "제2차 세계대전을 배경으로 한 유명한 일기책 '안네의 일기'는 어떤 형식으로 쓰였을까요?",
+      options: ["소녀가 숨어 지내며 쓴 개인 일기", "정부가 발표한 공식 보고서", "군인이 쓴 작전 계획서", "신문 기자의 뉴스 기사"],
+      answerIndex: 0,
+      explain: "안네의 일기는 안네 프랑크라는 소녀가 나치를 피해 숨어 지내던 시절 쓴 개인적인 일기예요."
+    },
+    {
+      q: "전쟁으로 폐허가 된 도시와 마을을 다시 세우는 일을 무엇이라고 부를까요?",
+      options: ["재건", "정복", "식민지화", "봉쇄"],
+      answerIndex: 0,
+      explain: "재건은 전쟁으로 파괴된 건물과 시설을 다시 세우고 사회를 복구하는 일을 말해요."
+    },
+    {
+      q: "전쟁이 끝난 후, 오늘날 우리가 두 번의 세계대전을 기억하며 배우는 가장 중요한 가치는 무엇일까요?",
+      options: ["평화와 인권의 소중함", "무기를 많이 만드는 것", "다른 나라를 정복하는 것", "전쟁을 자랑스러워하는 것"],
+      answerIndex: 0,
+      explain: "두 번의 세계대전을 통해 사람들은 평화와 인권이 얼마나 소중한 가치인지 깊이 깨닫게 되었어요."
+    },
+    {
+      q: "제2차 세계대전 당시 여러 나라의 어린이들이 학교 대신 겪어야 했던 일로 알맞은 것은 무엇일까요?",
+      options: ["피란이나 방공호 대피 등 어려운 생활", "매일 신나는 여행", "학교 수업이 오히려 늘어남", "아무 변화 없이 평소와 같은 생활"],
+      answerIndex: 0,
+      explain: "전쟁 중 많은 어린이들은 폭격을 피해 대피하거나 다른 지역으로 피란을 떠나는 등 힘든 생활을 겪어야 했어요."
+    },
+    {
+      q: "전쟁 중 적에게 자신의 위치나 정보를 들키지 않기 위해 밤에 불빛을 가리는 것을 무엇이라고 부를까요?",
+      options: ["등화관제", "야간 개장", "조명 축제", "가로등 설치"],
+      answerIndex: 0,
+      explain: "등화관제는 적의 폭격기가 도시의 위치를 알아채지 못하도록 밤에 불빛을 가리는 것을 말해요."
+    },
+    {
+      q: "전쟁 중 사람들이 폭격을 피해 몸을 숨기던 지하 시설을 무엇이라고 부를까요?",
+      options: ["방공호", "지하철역 매표소", "은행 금고", "영화관"],
+      answerIndex: 0,
+      explain: "방공호는 폭격이나 공습으로부터 몸을 피하기 위해 만든 지하 대피 시설이에요."
+    },
+    {
+      q: "세계대전과 같이 여러 나라가 함께 겪은 전쟁의 역사를 배우는 것이 중요한 까닭은 무엇일까요?",
+      options: ["같은 비극이 되풀이되지 않도록 하기 위해서", "전쟁을 흉내 내기 위해서", "시험 점수를 위해서만", "아무 의미가 없어서"],
+      answerIndex: 0,
+      explain: "역사를 배우는 것은 과거의 잘못이나 비극을 기억하고, 같은 일이 되풀이되지 않도록 하기 위함이에요."
+    },
+    {
+      q: "제1차 세계대전과 제2차 세계대전을 겪은 뒤, 세계 여러 나라들이 공통적으로 추구하게 된 것은 무엇일까요?",
+      options: ["국제 협력과 평화 유지", "서로 더 많이 싸우는 것", "다른 나라와 교류를 끊는 것", "무기 경쟁만 강화하는 것"],
+      answerIndex: 0,
+      explain: "두 번의 큰 전쟁을 겪은 세계 여러 나라들은 국제연합(UN) 등을 통해 서로 협력하고 평화를 지키려는 노력을 이어가고 있어요."
+    },
+    {
+      q: "제2차 세계대전 당시, 전쟁에 필요한 물자를 아끼기 위해 사람들이 실천한 행동으로 알맞은 것은 무엇일까요?",
+      options: ["종이, 고철 등을 모아 재활용했다", "물건을 마구 낭비했다", "아무것도 아끼지 않았다", "새 물건만 계속 구매했다"],
+      answerIndex: 0,
+      explain: "전쟁 중에는 물자가 부족해서 사람들이 종이나 고철 등을 모아 재활용하며 절약하는 생활을 했어요."
+    },
+    {
+      q: "전쟁의 참혹함을 알리고 평화의 소중함을 기리기 위해 각 나라에 세워진 것은 무엇일까요?",
+      options: ["전쟁 기념관과 추모비", "놀이공원", "쇼핑몰", "경기장"],
+      answerIndex: 0,
+      explain: "많은 나라에서는 전쟁의 아픔을 기억하고 평화를 기리기 위해 전쟁 기념관과 추모비를 세우고 있어요."
+    }
   ];
 
-  var TOTAL_TIME = 60 * 60; // 60분
-  var SAVE_KEY = 'worldWarQuiz100.progress.v1';
-  var HISTORY_KEY = 'worldWarQuiz100.history.v1';
-  var lastRecordStamp = null; // dateISO of the attempt just finished, for highlighting
+  const POINTS_PER_CORRECT = 10;
+  const STORAGE_KEY = 'ww100-progress';
 
-  var order = [], current = 0, score = 0, results = [], timeLeft = TOTAL_TIME, timerId = null, answered = false;
+  let currentIndex = 0;
+  let score = 0;
+  let answered = false;
 
-  var els = {
-    startPanel: document.getElementById('startPanel'),
-    quizPanel: document.getElementById('quizPanel'),
-    resultPanel: document.getElementById('resultPanel'),
-    startBtn: document.getElementById('startBtn'),
-    retryBtn: document.getElementById('retryBtn'),
-    resumeCard: document.getElementById('resumeCard'),
-    resumeInfo: document.getElementById('resumeInfo'),
-    resumeBtn: document.getElementById('resumeBtn'),
-    freshBtn: document.getElementById('freshBtn'),
-    leaderboardList: document.getElementById('leaderboardList'),
-    lbClearBtn: document.getElementById('lbClearBtn'),
-    resultRank: document.getElementById('resultRank'),
-    qCounter: document.getElementById('qCounter'),
-    scoreMini: document.getElementById('scoreMini'),
-    progressFill: document.getElementById('progressFill'),
-    timer: document.getElementById('timer'),
-    saveExitBtn: document.getElementById('saveExitBtn'),
-    questionText: document.getElementById('questionText'),
-    choices: document.getElementById('choices'),
-    feedback: document.getElementById('feedback'),
-    medal: document.getElementById('medal'),
-    resultTitle: document.getElementById('resultTitle'),
-    scoreLine: document.getElementById('scoreLine'),
-    resultMsg: document.getElementById('resultMsg')
-  };
+  const screenStart = document.getElementById('screen-start');
+  const screenGame = document.getElementById('screen-game');
+  const screenResult = document.getElementById('screen-result');
 
-  function safeGet(key){ try { return window.localStorage.getItem(key); } catch(e){ return null; } }
-  function safeSet(key, val){ try { window.localStorage.setItem(key, val); } catch(e){ /* ignore */ } }
-  function safeRemove(key){ try { window.localStorage.removeItem(key); } catch(e){ /* ignore */ } }
+  const btnStart = document.getElementById('btn-start');
+  const btnResume = document.getElementById('btn-resume');
+  const btnNext = document.getElementById('btn-next');
+  const btnRestart = document.getElementById('btn-restart');
+  const btnReset = document.getElementById('btn-reset');
+  const resumeBanner = document.getElementById('resume-banner');
+  const saveIndicator = document.getElementById('save-indicator');
 
-  function loadSave(){
-    var raw = safeGet(SAVE_KEY);
-    if (!raw) return null;
-    try {
-      var data = JSON.parse(raw);
-      if (!data || !Array.isArray(data.order) || typeof data.current !== 'number') return null;
-      if (data.current >= QUESTIONS.length) return null;
-      return data;
-    } catch(e){ return null; }
+  const progressLabel = document.getElementById('progress-label');
+  const scoreLabel = document.getElementById('score-label');
+  const questionText = document.getElementById('question-text');
+  const optionsContainer = document.getElementById('options-container');
+  const feedbackBox = document.getElementById('feedback-box');
+  const feedbackTitle = document.getElementById('feedback-title');
+  const feedbackExplain = document.getElementById('feedback-explain');
+
+  const finalScore = document.getElementById('final-score');
+  const resultMsg = document.getElementById('result-msg');
+  const resultMedal = document.getElementById('result-medal');
+
+  const screenLeaderboard = document.getElementById('screen-leaderboard');
+  const nicknameInput = document.getElementById('nickname-input');
+  const btnRegisterScore = document.getElementById('btn-register-score');
+  const registerStatus = document.getElementById('register-status');
+  const btnViewLeaderboardStart = document.getElementById('btn-view-leaderboard-start');
+  const btnViewLeaderboardResult = document.getElementById('btn-view-leaderboard-result');
+  const btnLeaderboardBack = document.getElementById('btn-leaderboard-back');
+  const leaderboardList = document.getElementById('leaderboard-list');
+
+  const LEADERBOARD_KEY = 'ww100-leaderboard';
+  let hasRegisteredThisRound = false;
+
+  // ===== 랭킹 (공유 저장소 사용) =====
+
+  async function fetchLeaderboard(){
+    try{
+      const result = await window.storage.get(LEADERBOARD_KEY, true);
+      if(result && result.value){
+        const list = JSON.parse(result.value);
+        if(Array.isArray(list)) return list;
+      }
+    }catch(err){
+      // 아직 등록된 기록이 없으면 정상적으로 무시해요.
+    }
+    return [];
   }
 
-  function persistSave(){
-    safeSet(SAVE_KEY, JSON.stringify({ order: order, current: current, score: score, results: results, timeLeft: timeLeft }));
+  function sanitizeNickname(raw){
+    let name = (raw || '').trim();
+    name = name.replace(/\s+/g, ' ');
+    if(name.length === 0) name = '이름 없는 탐험가';
+    if(name.length > 12) name = name.slice(0, 12);
+    return name;
   }
 
-  function clearSave(){ safeRemove(SAVE_KEY); }
-
-  // ---------- personal score history (this browser only) ----------
-  function loadHistory(){
-    var raw = safeGet(HISTORY_KEY);
-    if (!raw) return [];
-    try {
-      var arr = JSON.parse(raw);
-      return Array.isArray(arr) ? arr : [];
-    } catch(e){ return []; }
+  async function submitScore(){
+    btnRegisterScore.disabled = true;
+    registerStatus.textContent = '등록하는 중...';
+    const nickname = sanitizeNickname(nicknameInput.value);
+    try{
+      const list = await fetchLeaderboard();
+      list.push({ name: nickname, score: score, ts: Date.now() });
+      list.sort((a, b) => (b.score - a.score) || (a.ts - b.ts));
+      const trimmed = list.slice(0, 50);
+      await window.storage.set(LEADERBOARD_KEY, JSON.stringify(trimmed), true);
+      hasRegisteredThisRound = true;
+      registerStatus.textContent = `"${nickname}"님, 랭킹에 등록되었어요! 🎉`;
+      renderLeaderboard(trimmed);
+    }catch(err){
+      registerStatus.textContent = '등록에 실패했어요. 잠시 후 다시 시도해주세요.';
+      console.error('랭킹 등록 오류:', err);
+    }finally{
+      btnRegisterScore.disabled = false;
+    }
   }
 
-  function addHistoryRecord(rec){
-    var arr = loadHistory();
-    arr.push(rec);
-    arr.sort(function(a, b){
-      if (b.score !== a.score) return b.score - a.score;
-      return new Date(b.date) - new Date(a.date);
-    });
-    arr = arr.slice(0, 30);
-    safeSet(HISTORY_KEY, JSON.stringify(arr));
-    return arr;
-  }
-
-  function formatDate(iso){
-    try {
-      var d = new Date(iso);
-      return d.toLocaleString('ko-KR', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-    } catch(e){ return ''; }
-  }
-
-  function formatElapsed(sec){
-    if (typeof sec !== 'number' || sec < 0) return '';
-    var m = Math.floor(sec / 60), s = sec % 60;
-    return m + '분 ' + (s < 10 ? '0' + s : s) + '초';
-  }
-
-  function renderLeaderboard(){
-    var history = loadHistory();
-    els.leaderboardList.innerHTML = '';
-    if (history.length === 0){
-      var empty = document.createElement('p');
-      empty.className = 'lb-empty';
-      empty.textContent = '아직 기록이 없어요. 첫 탐험을 완료하면 여기에 순위가 쌓여요!';
-      els.leaderboardList.appendChild(empty);
+  function renderLeaderboard(list){
+    leaderboardList.innerHTML = '';
+    if(!list || list.length === 0){
+      leaderboardList.innerHTML = '<div class="lb-empty">아직 등록된 기록이 없어요. 첫 번째로 등록해보세요!</div>';
       return;
     }
-    var medals = ['🥇', '🥈', '🥉'];
-    history.slice(0, 10).forEach(function(rec, i){
-      var row = document.createElement('li');
-      row.className = 'lb-row' + (rec.date === lastRecordStamp ? ' mine' : '');
-
-      var rank = document.createElement('span');
+    const medals = ['🥇', '🥈', '🥉'];
+    list.slice(0, 10).forEach((entry, idx) => {
+      const row = document.createElement('div');
+      row.className = 'lb-row';
+      const rank = document.createElement('div');
       rank.className = 'lb-rank';
-      rank.textContent = medals[i] || String(i + 1);
-
-      var body = document.createElement('span');
-      body.className = 'lb-body';
-      var scoreEl = document.createElement('span');
-      scoreEl.className = 'lb-score';
-      scoreEl.textContent = rec.score + ' / ' + rec.total + '문제 정답';
-      var metaEl = document.createElement('span');
-      metaEl.className = 'lb-meta';
-      metaEl.textContent = formatDate(rec.date) + (rec.elapsed != null ? ' · 소요 ' + formatElapsed(rec.elapsed) : '');
-      body.appendChild(scoreEl);
-      body.appendChild(metaEl);
-
+      rank.textContent = medals[idx] || String(idx + 1);
+      const name = document.createElement('div');
+      name.className = 'lb-name';
+      name.textContent = entry.name || '이름 없는 탐험가';
+      const sc = document.createElement('div');
+      sc.className = 'lb-score';
+      sc.textContent = `${entry.score}점`;
       row.appendChild(rank);
-      row.appendChild(body);
-
-      if (rec.date === lastRecordStamp){
-        var tag = document.createElement('span');
-        tag.className = 'lb-tag';
-        tag.textContent = '방금';
-        row.appendChild(tag);
-      }
-
-      els.leaderboardList.appendChild(row);
+      row.appendChild(name);
+      row.appendChild(sc);
+      leaderboardList.appendChild(row);
     });
   }
 
-  function refreshResumeUI(){
-    var saved = loadSave();
-    if (saved){
-      els.resumeCard.hidden = false;
-      var pct = Math.round((saved.current / QUESTIONS.length) * 100);
-      els.resumeInfo.textContent = saved.current + ' / ' + QUESTIONS.length + '문제 진행 (' + pct + '%) · 정답 ' + saved.score + '개';
-    } else {
-      els.resumeCard.hidden = true;
-    }
+  async function showLeaderboardScreen(){
+    screenStart.classList.add('hidden');
+    screenGame.classList.add('hidden');
+    screenResult.classList.add('hidden');
+    screenLeaderboard.classList.remove('hidden');
+    leaderboardList.innerHTML = '<div class="lb-empty">불러오는 중...</div>';
+    const list = await fetchLeaderboard();
+    renderLeaderboard(list);
   }
 
-  function shuffle(arr){
-    var a = arr.slice();
-    for (var i = a.length - 1; i > 0; i--){
-      var j = Math.floor(Math.random() * (i + 1));
-      var t = a[i]; a[i] = a[j]; a[j] = t;
-    }
-    return a;
+  function backFromLeaderboard(){
+    screenLeaderboard.classList.add('hidden');
+    screenStart.classList.remove('hidden');
   }
 
-  function formatTime(sec){
-    if (sec < 0) sec = 0;
-    var m = Math.floor(sec / 60);
-    var s = sec % 60;
-    return (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
-  }
+  // ===== 저장 / 이어하기 =====
 
-  function startTimer(){
-    clearInterval(timerId);
-    els.timer.textContent = formatTime(timeLeft);
-    els.timer.classList.toggle('low', timeLeft <= 120);
-    timerId = setInterval(function(){
-      timeLeft--;
-      els.timer.textContent = formatTime(timeLeft);
-      els.timer.classList.toggle('low', timeLeft <= 120);
-      if (timeLeft % 20 === 0) persistSave();
-      if (timeLeft <= 0){
-        clearInterval(timerId);
-        finishQuiz();
+  async function saveProgress(){
+    try{
+      await window.storage.set(STORAGE_KEY, JSON.stringify({ currentIndex, score }), false);
+      if(saveIndicator){
+        saveIndicator.textContent = '저장됨 ✓';
+        setTimeout(() => { if(saveIndicator) saveIndicator.textContent = ''; }, 1200);
       }
-    }, 1000);
-  }
-
-  function updateProgressUI(){
-    els.qCounter.textContent = '질문 ' + (current + 1) + ' / ' + QUESTIONS.length;
-    var wrong = results.length - score;
-    els.scoreMini.innerHTML = '정답 <b class="g">' + score + '</b> · 오답 <b class="b">' + wrong + '</b>';
-    els.progressFill.style.width = Math.round((current / QUESTIONS.length) * 100) + '%';
-  }
-
-  function beginSession(fresh){
-    if (fresh){
-      order = shuffle(QUESTIONS.map(function(_, i){ return i; }));
-      current = 0; score = 0; results = []; timeLeft = TOTAL_TIME;
-      clearSave();
+    }catch(err){
+      console.error('저장 중 오류가 발생했어요:', err);
     }
-    answered = false;
-    els.startPanel.hidden = true;
-    els.resultPanel.hidden = true;
-    els.quizPanel.hidden = false;
-    startTimer();
-    updateProgressUI();
+  }
+
+  async function clearProgress(){
+    try{
+      await window.storage.delete(STORAGE_KEY, false);
+    }catch(err){
+      // 저장된 기록이 없으면 오류가 날 수 있어요. 무시해도 괜찮아요.
+    }
+  }
+
+  async function checkSavedProgress(){
+    try{
+      const result = await window.storage.get(STORAGE_KEY, false);
+      if(result && result.value){
+        const data = JSON.parse(result.value);
+        if(data && typeof data.currentIndex === 'number' && data.currentIndex >= 0 && data.currentIndex < questions.length){
+          resumeBanner.textContent = `이어서 풀 수 있는 기록이 있어요! (문제 ${data.currentIndex + 1} / ${questions.length}, 점수 ${data.score}점)`;
+          resumeBanner.classList.remove('hidden');
+          btnResume.classList.remove('hidden');
+          btnResume.dataset.savedIndex = String(data.currentIndex);
+          btnResume.dataset.savedScore = String(data.score);
+        }
+      }
+    }catch(err){
+      // 저장된 기록이 없으면 정상적으로 무시해요.
+    }
+  }
+
+  // ===== 게임 진행 =====
+
+  function startGame(){
+    currentIndex = 0;
+    score = 0;
+    clearProgress();
+    screenStart.classList.add('hidden');
+    screenResult.classList.add('hidden');
+    screenGame.classList.remove('hidden');
+    renderQuestion();
+  }
+
+  function resumeGame(){
+    currentIndex = parseInt(btnResume.dataset.savedIndex, 10) || 0;
+    score = parseInt(btnResume.dataset.savedScore, 10) || 0;
+    screenStart.classList.add('hidden');
+    screenResult.classList.add('hidden');
+    screenGame.classList.remove('hidden');
     renderQuestion();
   }
 
   function renderQuestion(){
     answered = false;
-    var qIndex = order[current];
-    var q = QUESTIONS[qIndex];
+    const item = questions[currentIndex];
+    progressLabel.textContent = `문제 ${currentIndex + 1} / ${questions.length}`;
+    scoreLabel.textContent = `점수: ${score}점`;
+    questionText.textContent = item.q;
 
-    els.feedback.hidden = true;
-    els.feedback.className = 'feedback';
-    els.choices.innerHTML = '';
-    els.questionText.textContent = q.q;
-    updateProgressUI();
-
-    var letters = ['A','B','C','D','E'];
-    var indices = shuffle(q.choices.map(function(_, i){ return i; }));
-
-    indices.forEach(function(origIdx, pos){
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'choice-btn';
-      btn.setAttribute('data-correct', origIdx === q.correct ? 'true' : 'false');
-
-      var letter = document.createElement('span');
-      letter.className = 'choice-letter';
-      letter.textContent = letters[pos];
-
-      var label = document.createElement('span');
-      label.textContent = q.choices[origIdx];
-
-      btn.appendChild(letter);
-      btn.appendChild(label);
-      btn.addEventListener('click', function(){ handleAnswer(btn, q); });
-      els.choices.appendChild(btn);
+    optionsContainer.innerHTML = '';
+    item.options.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.textContent = opt;
+      btn.addEventListener('click', () => handleAnswer(idx, btn));
+      optionsContainer.appendChild(btn);
     });
+
+    feedbackBox.className = 'feedback';
+    feedbackBox.innerHTML = '<div class="fb-title" id="feedback-title"></div><div id="feedback-explain"></div>';
+    btnNext.classList.add('hidden');
+
+    saveProgress();
   }
 
-  function handleAnswer(btn, q){
-    if (answered) return;
+  function handleAnswer(selectedIndex, btnEl){
+    if(answered) return;
     answered = true;
 
-    var isCorrect = btn.getAttribute('data-correct') === 'true';
-    var allBtns = els.choices.querySelectorAll('.choice-btn');
-    allBtns.forEach(function(b){
-      b.disabled = true;
-      if (b.getAttribute('data-correct') === 'true') b.classList.add('correct');
-    });
-    if (!isCorrect) btn.classList.add('wrong');
+    const item = questions[currentIndex];
+    const allButtons = optionsContainer.querySelectorAll('.option-btn');
+    allButtons.forEach(b => b.disabled = true);
 
-    if (isCorrect){
-      score++;
-      results.push('correct');
-      els.feedback.classList.add('good');
-      els.feedback.innerHTML = '<span class="fb-title">정답이에요! 🎉</span><span>' + q.explain + '</span>';
+    const isCorrect = selectedIndex === item.answerIndex;
+
+    if(isCorrect){
+      btnEl.classList.add('correct');
+      score += POINTS_PER_CORRECT;
+      scoreLabel.textContent = `점수: ${score}점`;
+
+      feedbackBox.classList.remove('wrong-fb');
+      feedbackBox.classList.add('correct-fb', 'show');
+      feedbackBox.querySelector('.fb-title').textContent = `🎉 정답이에요! +${POINTS_PER_CORRECT}점`;
+      feedbackBox.querySelector('#feedback-explain').textContent = item.explain;
     } else {
-      results.push('wrong');
-      els.feedback.classList.add('bad');
-      els.feedback.innerHTML = '<span class="fb-title">아쉬워요! 정답은 "' + q.choices[q.correct] + '" 예요.</span><span>' + q.explain + '</span>';
+      btnEl.classList.add('wrong');
+      allButtons[item.answerIndex].classList.add('correct');
+
+      feedbackBox.classList.remove('correct-fb');
+      feedbackBox.classList.add('wrong-fb', 'show');
+      feedbackBox.querySelector('.fb-title').textContent = `아쉬워요! 정답은 "${item.options[item.answerIndex]}" 예요`;
+      feedbackBox.querySelector('#feedback-explain').textContent = item.explain;
     }
 
-    updateProgressUI();
-    persistSave();
-
-    var nextBtn = document.createElement('button');
-    nextBtn.type = 'button';
-    nextBtn.className = 'next-btn';
-    nextBtn.textContent = (current === QUESTIONS.length - 1) ? '결과 보기' : '다음 질문 →';
-    nextBtn.addEventListener('click', goNext);
-    els.feedback.appendChild(nextBtn);
-    els.feedback.hidden = false;
-    els.feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    btnNext.classList.remove('hidden');
+    saveProgress();
   }
 
-  function goNext(){
-    current++;
-    if (current >= QUESTIONS.length){
-      finishQuiz();
+  function nextQuestion(){
+    currentIndex++;
+    if(currentIndex >= questions.length){
+      showResult();
     } else {
-      persistSave();
       renderQuestion();
     }
   }
 
-  function finishQuiz(){
-    clearInterval(timerId);
-    clearSave();
-    els.quizPanel.hidden = true;
-    els.resultPanel.hidden = false;
+  function showResult(){
+    screenGame.classList.add('hidden');
+    screenResult.classList.remove('hidden');
+    finalScore.textContent = `${score}점`;
+    clearProgress();
 
-    els.scoreLine.textContent = score + ' ';
-    var span = document.createElement('span');
-    span.textContent = '/ ' + QUESTIONS.length;
-    els.scoreLine.appendChild(span);
+    hasRegisteredThisRound = false;
+    nicknameInput.value = '';
+    registerStatus.textContent = '';
 
-    var elapsed = TOTAL_TIME - Math.max(timeLeft, 0);
-    var record = { score: score, total: QUESTIONS.length, date: new Date().toISOString(), elapsed: elapsed };
-    lastRecordStamp = record.date;
-    var history = addHistoryRecord(record);
-    var rankIdx = history.findIndex(function(r){ return r.date === record.date; });
-    if (rankIdx > -1){
-      els.resultRank.hidden = false;
-      els.resultRank.textContent = '내 역대 기록 중 ' + (rankIdx + 1) + '위예요';
+    const maxScore = questions.length * POINTS_PER_CORRECT;
+    if(score === maxScore){
+      resultMedal.textContent = '🏆';
+      resultMsg.textContent = '완벽해요! 진짜 세계대전 박사네요!';
+    } else if(score >= maxScore * 0.6){
+      resultMedal.textContent = '🌟';
+      resultMsg.textContent = '아주 잘했어요! 역사에 대해 많이 알고 있네요.';
     } else {
-      els.resultRank.hidden = true;
+      resultMedal.textContent = '📚';
+      resultMsg.textContent = '괜찮아요! 다시 도전하면서 더 배워봐요.';
     }
-
-    var medal, title, msg;
-    var pct = score / QUESTIONS.length;
-    if (pct >= 0.9){
-      medal = '🥇'; title = '세계사 마스터 탐험가!';
-      msg = '세계대전의 역사를 정말 잘 알고 있네요. 최고예요!';
-    } else if (pct >= 0.7){
-      medal = '🥈'; title = '뛰어난 탐험가!';
-      msg = '많이 맞혔어요. 틀린 문제만 다시 살펴봐도 완벽해질 거예요.';
-    } else if (pct >= 0.5){
-      medal = '🥉'; title = '성장하는 탐험가';
-      msg = '좋은 출발이에요! 틀린 문제의 설명을 다시 읽어보면 좋아요.';
-    } else {
-      medal = '🧭'; title = '탐험은 이제 시작!';
-      msg = '한 번 더 도전하면서 세계대전 이야기를 알아가 봐요.';
-    }
-    els.medal.textContent = medal;
-    els.resultTitle.textContent = title;
-    els.resultMsg.textContent = msg;
-
-    renderLeaderboard();
   }
 
-  function saveAndExit(){
-    persistSave();
-    clearInterval(timerId);
-    els.quizPanel.hidden = true;
-    els.resultPanel.hidden = true;
-    els.startPanel.hidden = false;
-    refreshResumeUI();
+  function resetToStart(){
+    const ok = window.confirm('지금까지 푼 기록이 사라져요. 처음부터 다시 시작할까요?');
+    if(!ok) return;
+    clearProgress();
+    screenGame.classList.add('hidden');
+    screenResult.classList.add('hidden');
+    resumeBanner.classList.add('hidden');
+    btnResume.classList.add('hidden');
+    screenStart.classList.remove('hidden');
   }
 
-  els.startBtn.addEventListener('click', function(){ beginSession(true); });
-  els.retryBtn.addEventListener('click', function(){ beginSession(true); });
-  els.saveExitBtn.addEventListener('click', saveAndExit);
-
-  els.resumeBtn.addEventListener('click', function(){
-    var saved = loadSave();
-    if (!saved){ refreshResumeUI(); return; }
-    order = saved.order; current = saved.current; score = saved.score;
-    results = saved.results || []; timeLeft = (typeof saved.timeLeft === 'number' && saved.timeLeft > 0) ? saved.timeLeft : TOTAL_TIME;
-    beginSession(false);
-  });
-
-  els.freshBtn.addEventListener('click', function(){
-    clearSave();
-    refreshResumeUI();
-  });
-
-  els.lbClearBtn.addEventListener('click', function(){
-    if (window.confirm('저장된 내 기록을 모두 지울까요? 이 작업은 되돌릴 수 없어요.')){
-      safeRemove(HISTORY_KEY);
-      lastRecordStamp = null;
-      renderLeaderboard();
+  btnStart.addEventListener('click', startGame);
+  btnResume.addEventListener('click', resumeGame);
+  btnNext.addEventListener('click', nextQuestion);
+  btnRestart.addEventListener('click', startGame);
+  btnReset.addEventListener('click', resetToStart);
+  btnRegisterScore.addEventListener('click', () => {
+    if(hasRegisteredThisRound){
+      registerStatus.textContent = '이미 이번 점수는 등록했어요!';
+      return;
     }
+    submitScore();
   });
+  btnViewLeaderboardStart.addEventListener('click', showLeaderboardScreen);
+  btnViewLeaderboardResult.addEventListener('click', showLeaderboardScreen);
+  btnLeaderboardBack.addEventListener('click', backFromLeaderboard);
 
-  document.addEventListener('visibilitychange', function(){
-    if (document.hidden && !els.quizPanel.hidden) persistSave();
-  });
-  window.addEventListener('pagehide', function(){
-    if (!els.quizPanel.hidden) persistSave();
-  });
-
-  refreshResumeUI();
-  renderLeaderboard();
-
+  checkSavedProgress();
 })();
 </script>
 </body>
